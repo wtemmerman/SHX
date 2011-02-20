@@ -1,61 +1,60 @@
-/* 
- * File:   main.cpp
- * Author: wiL
- *
- * Created on 15 février 2011, 18:01
- */
-#include "Game.hpp"
-#include "time.h"
-#include <cstdio>
+#include "moteur.hpp"
+#include "constants.hpp"
+Moteur moteur;
 
-bool init(SDL_Surface * screen)
+using namespace std;
+
+int main(int argc, char **argv)
 {
-    //Initialisation de SDL
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
-    {
-        return false;
-    }
+	SDL_Event event;
+	SDL_Surface *screen;
+	int done = 0;
 
-    //Ouvrerture d'une surface pour l'affichage de la fenêtre
-    screen = SDL_SetVideoMode(SCREEN_WIDTH,SCREEN_HEIGHT, SCREEN_BPP, SDL_DOUBLEBUF | SDL_HWSURFACE);
+	if(SDL_Init(SDL_INIT_VIDEO)!=0) {
+		cout << "Probleme pour initialiser SDL: " << SDL_GetError() << endl;
+		return 1;
+	}
+
+    SDL_WM_SetCaption("Shoot'em up xTrem", NULL);
+
+	screen = SDL_SetVideoMode(SCREEN_WIDTH,SCREEN_HEIGHT, SCREEN_BPP, SDL_DOUBLEBUF | SDL_HWSURFACE);
     if(screen==NULL)
-        return false;
+      	done = 1;
 
-    //Mettre un titre à la fenêtre
-    SDL_WM_SetCaption("Shoot'em up Xtreme", NULL);
-    return true;
-}
-
-void clean_up(SDL_Surface * screen)
-{
-    //Libération surface
-    SDL_FreeSurface(screen);
-    //On quitte SDL
-    SDL_Quit();
-}
-
-int main(int argc, char** argv)
-{
-	SDL_Surface * screen = NULL;
-	
-    bool inGame = true;
-    if( !init(screen) )
-    {
-        printf( "Can't init SDL:  %s\n", SDL_GetError( ) );
-        return EXIT_FAILURE;
-    }
-
-    Game game(screen);
-
-    if(game.init()==false)
+    if(!moteur.init())
         return 1;
-        
-    while(inGame)
-    {
-        if(!game.launch())
-            inGame = false;
-    }
-    clean_up(screen);   
-    return 0;
-}
 
+    while(!done)
+    {
+		while(SDL_PollEvent(&event))
+		{
+			switch(event.type)
+			{
+				case SDL_QUIT:
+					done=1;
+					break;
+				case SDL_KEYUP:
+					if(event.key.keysym.sym==SDLK_q)
+						moteur.fin();
+					else if(event.key.keysym.sym==SDLK_ESCAPE)
+						moteur.echangeFonctions();
+					break;
+				case SDL_MOUSEBUTTONUP:
+					moteur.clic(event.button.x, event.button.y);
+					break;
+				default:
+					break;
+			}
+		}
+
+    moteur.aff(screen);
+    moteur.verif();
+    SDL_Flip(screen);
+    }
+
+	SDL_Quit();
+
+    (void) argc;
+    (void) argv;
+	return 0;
+}
