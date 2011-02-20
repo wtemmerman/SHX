@@ -1,0 +1,7 @@
+data/menu.bmp
+data/titre.bmp
+100 30
+data/jouer.bmp
+200 250
+data/quitter.bmp
+230 400
