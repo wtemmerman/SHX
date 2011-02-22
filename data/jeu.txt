@@ -1,3 +1,4 @@
 data/bg.bmp
-150 150
+data/player.bmp
+
 

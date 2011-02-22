@@ -1,6 +1,7 @@
-#include "moteur.hpp"
+#include "engine.hpp"
 #include "constants.hpp"
-Moteur moteur;
+
+Engine engine;
 
 using namespace std;
 
@@ -11,7 +12,7 @@ int main(int argc, char **argv)
 	int done = 0;
 
 	if(SDL_Init(SDL_INIT_VIDEO)!=0) {
-		cout << "Probleme pour initialiser SDL: " << SDL_GetError() << endl;
+		cout << "Problem for init SDL : " << SDL_GetError() << endl;
 		return 1;
 	}
 
@@ -21,35 +22,19 @@ int main(int argc, char **argv)
     if(screen==NULL)
       	done = 1;
 
-    if(!moteur.init())
+    if(!engine.init())
         return 1;
 
     while(!done)
     {
 		while(SDL_PollEvent(&event))
 		{
-			switch(event.type)
-			{
-				case SDL_QUIT:
-					done=1;
-					break;
-				case SDL_KEYUP:
-					if(event.key.keysym.sym==SDLK_q)
-						moteur.fin();
-					else if(event.key.keysym.sym==SDLK_ESCAPE)
-						moteur.echangeFonctions();
-					break;
-				case SDL_MOUSEBUTTONUP:
-					moteur.clic(event.button.x, event.button.y);
-					break;
-				default:
-					break;
-			}
+			done = engine.handle_input(event);
 		}
 
-    moteur.aff(screen);
-    moteur.verif();
-    SDL_Flip(screen);
+		engine.show(screen);
+		engine.check();
+		SDL_Flip(screen);
     }
 
 	SDL_Quit();

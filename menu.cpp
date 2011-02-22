@@ -2,13 +2,13 @@
 
 using namespace std;
 
-extern Moteur moteur;
+extern Engine engine;
 
 Menu::Menu()
 {
 	int i;
 	for(i=0;i<4;i++)
-		images[i] = NULL;
+		pictures[i] = NULL;
 }
 
 Menu::~Menu()
@@ -16,7 +16,7 @@ Menu::~Menu()
 	int i;
 	for(i=0;i<4;i++)
 	{
-		SDL_FreeSurface(images[i]) , images[i] = NULL;
+		SDL_FreeSurface(pictures[i]) , pictures[i] = NULL;
 	}
 }
 
@@ -24,44 +24,43 @@ bool Menu::init(string file)
 {
 	int i;
 	ifstream input;
-	string nom;
+	string name;
 	
 	input.open(file.c_str());
 
 	if(input.fail())
 	{
-		cout << "Erreur dans l'ouverture du fichier " << file << endl;
+		cout << "Error during the openning of file of init menu " << file << endl;
 		return false;
 	}
 
-	input >> nom;
+	input >> name;
 
-	images[0] = SDL_LoadBMP(nom.c_str());
+	pictures[0] = SDL_LoadBMP(name.c_str());
 	
-	input >> nom;
-	images[1] = SDL_LoadBMP(nom.c_str());
+	input >> name;
+	pictures[1] = SDL_LoadBMP(name.c_str());
 	
-	input >> titre.x >> titre.y;
+	input >> title.x >> title.y;
 	
-	input >> nom;
-	images[2] = SDL_LoadBMP(nom.c_str());
+	input >> name;
+	pictures[2] = SDL_LoadBMP(name.c_str());
 	
-	input >> jouer.x >> jouer.y;
+	input >> play.x >> play.y;
 	
-	input >> nom;
-	images[3] = SDL_LoadBMP(nom.c_str());
+	input >> name;
+	pictures[3] = SDL_LoadBMP(name.c_str());
 
-	//Mise en place de la transparence	
 	for(i=1;i<4;i++)
-		SDL_SetColorKey(images[i],SDL_RLEACCEL | SDL_SRCCOLORKEY, SDL_MapRGB( images[i]->format, 0xff, 0x00, 0xff ));
+		SDL_SetColorKey(pictures[i],SDL_RLEACCEL | SDL_SRCCOLORKEY, SDL_MapRGB( pictures[i]->format, 0xff, 0x00, 0xff ));
 
-	input >> quitter.x >> quitter.y;
+	input >> exit.x >> exit.y;
 	
-	jouer.w = images[2]->w;
-	jouer.h = images[2]->h;
+	play.w = pictures[2]->w;
+	play.h = pictures[2]->h;
 	
-	quitter.w = images[3]->w;
-	quitter.h = images[3]->h;
+	exit.w = pictures[3]->w;
+	exit.h = pictures[3]->h;
 
 	input.close();
 
@@ -70,25 +69,23 @@ bool Menu::init(string file)
 
 void Menu::clic(int x, int y)
 {
-	//Est-ce qu'on est dans le bouton nouveau?
-	if((jouer.x<x)&&(jouer.x+jouer.w>x)&&(jouer.y<y)&&(jouer.y+jouer.h>y))
+	//button nouveau?
+	if((play.x<x)&&(play.x+play.w>x)&&(play.y<y)&&(play.y+play.h>y))
 	{
-		moteur.initJeu();
-		moteur.setFonctionsJeu();
+		engine.setFonctionsGame();
 	}
-	//Est-ce qu'on est dans le bouton quitter?
-	else if((quitter.x<x)&&(quitter.x+quitter.w>x)&&(quitter.y<y)&&(quitter.y+quitter.h>y))
-		moteur.fin();
+	//button quitter?
+	else if((exit.x<x)&&(exit.x+exit.w>x)&&(exit.y<y)&&(exit.y+exit.h>y))
+		engine.end();
 }
 
-void Menu::aff(SDL_Surface *screen)
+void Menu::show(SDL_Surface *screen)
 {
-	//Si on a une image, on l'affiche
-	if(images[0] && images[1] && images[2] && images[3])
+	if(pictures[0] && pictures[1] && pictures[2] && pictures[3])
 	{
-		SDL_BlitSurface(images[0],NULL,screen,NULL);
-		SDL_BlitSurface(images[1],NULL,screen,&titre);
-		SDL_BlitSurface(images[2],NULL,screen,&jouer);
-		SDL_BlitSurface(images[3],NULL,screen,&quitter);
+		SDL_BlitSurface(pictures[0],NULL,screen,NULL);
+		SDL_BlitSurface(pictures[1],NULL,screen,&title);
+		SDL_BlitSurface(pictures[2],NULL,screen,&play);
+		SDL_BlitSurface(pictures[3],NULL,screen,&exit);
 	}
 }

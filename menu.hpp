@@ -4,22 +4,20 @@
 class Menu;
 
 #include "constants.hpp"
-#include "moteur.hpp"
+#include "engine.hpp"
 
 class Menu
 {
 	private:
-		SDL_Surface *images[4];	
-		SDL_Rect jouer, quitter, titre;
+		SDL_Surface * pictures[4];	
+		SDL_Rect play, exit, title;
 	public:
 		Menu();
 		~Menu();
 
-		bool init(std::string file);
-		
+		bool init(std::string file);		
 		void clic(int x, int y);
-
-		void aff(SDL_Surface *screen);
+		void show(SDL_Surface *screen);
 };
 
 #endif
