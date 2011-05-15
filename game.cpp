@@ -1,5 +1,4 @@
 #include "game.hpp"
-#include "bullet.hpp"
 
 using namespace std;
 
@@ -7,17 +6,17 @@ Game::Game()
 {
     bg = NULL;
     bgX = bgY = 0;
-    bulletsPlayer = vector<Bullet>();
+    bulletsPlayer = vector<Bullet *>();
 }
 
 Game::~Game()
 {
     SDL_FreeSurface(bg);
     SDL_FreeSurface(bullet);
-    for (vector<Bullet>::iterator it = bulletsPlayer.begin(); 
+    for (vector<Bullet *>::iterator it = bulletsPlayer.begin(); 
 			it != bulletsPlayer.end(); 
 			it++)
-       bulletsPlayer.erase(it);
+       delete (*it);
 }
 
 bool Game::init(string file)
@@ -90,8 +89,8 @@ void Game::show(SDL_Surface *screen)
 
 void Game::fireBullet()
 {
-	Bullet b;
-	b.init(bullet);
+	Bullet * b;
+	b->init(bullet);
 	bulletsPlayer.push_back(b);
 	cout<< "PushBack done"  << bulletsPlayer.size() << endl;
 }

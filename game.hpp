@@ -13,7 +13,7 @@ class Game
     private: 
     	SDL_Surface * bg;
     	SDL_Surface * bullet;  
-    	std::vector<Bullet> bulletsPlayer;
+    	std::vector<Bullet *> bulletsPlayer;
 		int bgX, bgY; 
     	bool end;
         void checkEnd();
