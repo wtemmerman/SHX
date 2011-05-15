@@ -2,3 +2,19 @@ Done : scrolling background
        player add	
 TODO: echap gestion (RAZ)
       add bullet
+	  aline menu
+
+pour SHX : ouais donc pour ta boucle d'update des bullets le soucis qui va se poser c'est pour la 
+détection de collision
+le bullet doit avoir connaissance des objets du jeu donc 
+et des bords de l'écran 
+pour un tir en diagonale par exemple 
+il doit pouvoir notifier le jeu d'une collision si on le gère dans l'update sinon c'est le jeu qui 
+est omniscient qui fait :foreach bullet
+foreach bullet: foreach enemy: if bullet.collide(enemy):
+bref sans parler des colisions, juste pour gérer la sortie d'écran 
+le bullet update() et sort donc il faut un moyen pour dire "je suis out il faut me remove" 
+soit tu fous un attribut de bullet : to_remove 
+et avant de faire foreach bullet: b.update() tu removes ceux qui ont le champs à True 
+mais tu sais qu'on ne peut pas utiliser un itérateur C++ sur un tableau que l'on modifie 
+donc tu devras le faire alamano via les index dans un for() normal 

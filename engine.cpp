@@ -102,7 +102,7 @@ void Engine::check()
 	{	
         if(!game->getEnd())
         {
-			cout<< "The game is not over" << endl;
+			//cout<< "The game is not over" << endl;
 		}
 	}
 }

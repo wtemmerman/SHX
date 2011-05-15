@@ -2,8 +2,10 @@
  
  using namespace std;
  
- Player::Player()
+ Player::Player(Game * game)
 {
+	game = game;
+	
     x = 0;
     y = 0;
 
@@ -43,10 +45,11 @@ void Player::handle_input(SDL_Event event)
     {
         switch( event.key.keysym.sym )
         {
-            case SDLK_UP: yVel -= PLAYER_HEIGHT / 5; break;
-            case SDLK_DOWN: yVel += PLAYER_HEIGHT / 5; break;
-            case SDLK_LEFT: xVel -= PLAYER_WIDTH / 5; break;
-            case SDLK_RIGHT: xVel += PLAYER_WIDTH / 5; break;
+            case SDLK_UP: yVel -= PLAYER_HEIGHT / 6; break;
+            case SDLK_DOWN: yVel += PLAYER_HEIGHT / 10; break;
+            case SDLK_LEFT: xVel -= PLAYER_WIDTH / 7; break;
+            case SDLK_RIGHT: xVel += PLAYER_WIDTH / 7; break;
+            case SDLK_SPACE: game->fireBullet();
             default: break;
         }
     }
@@ -54,24 +57,26 @@ void Player::handle_input(SDL_Event event)
     {
         switch( event.key.keysym.sym )
         {
-            case SDLK_UP: yVel += PLAYER_HEIGHT / 5; break;
-            case SDLK_DOWN: yVel -= PLAYER_HEIGHT / 5; break;
-            case SDLK_LEFT: xVel += PLAYER_WIDTH / 5; break;
-            case SDLK_RIGHT: xVel -= PLAYER_WIDTH / 5; break;
+            case SDLK_UP: yVel += PLAYER_HEIGHT / 6; break;
+            case SDLK_DOWN: yVel -= PLAYER_HEIGHT / 10; break;
+            case SDLK_LEFT: xVel += PLAYER_WIDTH / 7; break;
+            case SDLK_RIGHT: xVel -= PLAYER_WIDTH / 7; break;
             default: break;
         }
     }
 }
 
+
 void Player::show(SDL_Surface *screen)
 {
 	SDL_Rect r;
+	//cout << "x " << xVel << "y " << yVel << endl;
     x += xVel;
     if( ( x < 0 ) || ( x + PLAYER_WIDTH > SCREEN_WIDTH ) )
     {
         x -= xVel;
     }
-    
+   
     y += yVel;
     if( ( y < 0 ) || ( y + PLAYER_HEIGHT > SCREEN_HEIGHT ) )
     {

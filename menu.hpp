@@ -17,7 +17,7 @@ class Menu
 
 		bool init(std::string file);		
 		void clic(int x, int y);
-		void show(SDL_Surface *screen);
+		void show(SDL_Surface * screen);
 };
 
 #endif
