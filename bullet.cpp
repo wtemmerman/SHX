@@ -8,7 +8,7 @@
     y = 0;
 
     xVel = 0;
-    yVel = 1;
+    yVel = -3;
    
 	toRemove = false;
 	
@@ -20,15 +20,16 @@ Bullet::~Bullet()
 	SDL_FreeSurface(spriteBullet);
 }
 
-bool Bullet::init(SDL_Surface * pSpriteBullet)
+bool Bullet::init(SDL_Surface * _spriteBullet, int _x, int _y)
 {
-	x = SCREEN_WIDTH / 2;
+	x = _x + PLAYER_WIDTH/2 - BULLET_WIDTH/2;
+	y = _y;
 	if(spriteBullet != NULL)
 	{
 		SDL_FreeSurface(spriteBullet);
 		spriteBullet = NULL;
 	}
-    spriteBullet = pSpriteBullet;
+    spriteBullet = _spriteBullet;
 
     return true;
     
@@ -39,7 +40,6 @@ void Bullet::show(SDL_Surface *screen)
 	SDL_Rect r;
     x += xVel;
     y += yVel;
-    cout << "x " << xVel << "y " << yVel << endl;
     if( ( x < 0 - BULLET_WIDTH ) || 
 		( x > BULLET_WIDTH + SCREEN_WIDTH ) ||
 		( y < 0 - BULLET_HEIGHT) || 

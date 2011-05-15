@@ -13,7 +13,7 @@ class Bullet
     public:
         Bullet();
         ~Bullet();
-        bool init(SDL_Surface * spriteBullet);
+        bool init(SDL_Surface * _spriteBullet, int _x, int _y);
         void show(SDL_Surface * screen);
         bool getRemove();
  };

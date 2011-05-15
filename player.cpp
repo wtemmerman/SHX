@@ -2,9 +2,9 @@
  
  using namespace std;
  
- Player::Player(Game * game)
+ Player::Player(Game * _game)
 {
-	game = game;
+	game = _game;
 	
     x = 0;
     y = 0;
@@ -86,4 +86,15 @@ void Player::show(SDL_Surface *screen)
     r.x = x;
     r.y = y;
     SDL_BlitSurface(spritePlayer, NULL, screen, &r);
+}
+
+
+int Player::getX()
+{
+	return x;
+}
+
+int Player::getY()
+{
+	return y;
 }
