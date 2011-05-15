@@ -12,7 +12,7 @@ class Player
 		Game * game;
         int x, y;
         int xVel, yVel;
-		SDL_Surface * sprite;
+		SDL_Surface * spritePlayer;
     public:
         Player(Game * game);
         ~Player();

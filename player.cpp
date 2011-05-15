@@ -12,25 +12,26 @@
     xVel = 0;
     yVel = 0;
     
-    sprite = NULL;
+    spritePlayer = NULL;
 }
 
 Player::~Player()
 {
-	SDL_FreeSurface(sprite);
+	SDL_FreeSurface(spritePlayer);
 }
 
 bool Player::init(const char * file)
 {
 	x = SCREEN_WIDTH /2;
 	y = SCREEN_WIDTH /2;
-	if(sprite!=NULL)
+	if(spritePlayer!=NULL)
 	{
-		SDL_FreeSurface(sprite), sprite = NULL;
+		SDL_FreeSurface(spritePlayer);
+		spritePlayer = NULL;
 	}
-    sprite = SDL_LoadBMP(file);
-    SDL_SetColorKey(sprite,SDL_RLEACCEL | SDL_SRCCOLORKEY, SDL_MapRGB( sprite->format, 0x00, 0x00, 0x00 ));
-    if( sprite==NULL )
+    spritePlayer = SDL_LoadBMP(file);
+    SDL_SetColorKey(spritePlayer,SDL_RLEACCEL | SDL_SRCCOLORKEY, SDL_MapRGB( spritePlayer->format, 0x00, 0x00, 0x00 ));
+    if( spritePlayer==NULL )
 	{
     	cout << "Problem loading pictures from the Player" << endl;
     	return false;
@@ -84,5 +85,5 @@ void Player::show(SDL_Surface *screen)
     }
     r.x = x;
     r.y = y;
-    SDL_BlitSurface(sprite, NULL, screen, &r);
+    SDL_BlitSurface(spritePlayer, NULL, screen, &r);
 }

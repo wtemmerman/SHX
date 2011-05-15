@@ -12,22 +12,23 @@
    
 	toRemove = false;
 	
-    sprite = NULL;
+    spriteBullet = NULL;
 }
 
 Bullet::~Bullet()
 {
-	SDL_FreeSurface(sprite);
+	SDL_FreeSurface(spriteBullet);
 }
 
-bool Bullet::init(SDL_Surface * spriteBullet)
+bool Bullet::init(SDL_Surface * pSpriteBullet)
 {
-	x = SCREEN_WIDTH /2;
-	if(sprite!=NULL)
+	x = SCREEN_WIDTH / 2;
+	if(spriteBullet != NULL)
 	{
-		SDL_FreeSurface(sprite), sprite = NULL;
+		SDL_FreeSurface(spriteBullet);
+		spriteBullet = NULL;
 	}
-    sprite = spriteBullet;
+    spriteBullet = pSpriteBullet;
 
     return true;
     
@@ -49,7 +50,7 @@ void Bullet::show(SDL_Surface *screen)
     }
     r.x = x;
     r.y = y;
-    SDL_BlitSurface(sprite, NULL, screen, &r);
+    SDL_BlitSurface(spriteBullet, NULL, screen, &r);
 }
 
 bool Bullet::getRemove()

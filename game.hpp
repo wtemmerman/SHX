@@ -4,7 +4,7 @@
 #include "constants.hpp"
 #include "player.hpp"
 #include "bullet.hpp"
-#include <vector>
+#include <list>
 
 class Player;
 
@@ -13,7 +13,7 @@ class Game
     private: 
     	SDL_Surface * bg;
     	SDL_Surface * bullet;  
-    	std::vector<Bullet *> bulletsPlayer;
+    	std::list<Bullet *> bulletsPlayer;
 		int bgX, bgY; 
     	bool end;
         void checkEnd();

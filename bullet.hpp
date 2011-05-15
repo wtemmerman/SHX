@@ -8,7 +8,7 @@ class Bullet
     private:
         int x, y;
         int xVel, yVel;
-		SDL_Surface * sprite;
+		SDL_Surface * spriteBullet;
 		bool toRemove;
     public:
         Bullet();

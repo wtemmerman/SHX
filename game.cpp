@@ -6,14 +6,14 @@ Game::Game()
 {
     bg = NULL;
     bgX = bgY = 0;
-    bulletsPlayer = vector<Bullet *>();
+    bulletsPlayer = list<Bullet *>();
 }
 
 Game::~Game()
 {
     SDL_FreeSurface(bg);
     SDL_FreeSurface(bullet);
-    for (vector<Bullet *>::iterator it = bulletsPlayer.begin(); 
+    for (list<Bullet *>::iterator it = bulletsPlayer.begin(); 
 			it != bulletsPlayer.end(); 
 			it++)
        delete (*it);
@@ -77,22 +77,24 @@ void Game::show(SDL_Surface *screen)
     SDL_BlitSurface(bg,NULL,screen,&r);  
       
     player->show(screen);
-   /* for (unsigned int i = 0; i < bulletsPlayer.size(); i++)
+    for (list<Bullet *>::iterator it = bulletsPlayer.begin(); 
+			it != bulletsPlayer.end(); 
+			it++)
 	{
 		cout<< "loOOOOOOOOOol"<< endl;
 		if((*it)->getRemove())
 			bulletsPlayer.erase(it);
 		else
 			(*it)->show(screen);
-	}*/
+	}
 }
 
 void Game::fireBullet()
 {
-	Bullet * b;
-	b->init(bullet);
+	Bullet * b = new Bullet();
+	if(!b->init(bullet))
+		cout << "Problème lors de l initialisation d une bullet" << endl;
 	bulletsPlayer.push_back(b);
-	cout<< "PushBack done"  << bulletsPlayer.size() << endl;
 }
 void Game::checkEnd()
 {
