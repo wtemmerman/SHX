@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
     SDL_WM_SetCaption("Shoot'em up xTrem", NULL);
-	//SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,250);
+
 	screen = SDL_SetVideoMode(SCREEN_WIDTH,SCREEN_HEIGHT, SCREEN_BPP, SDL_DOUBLEBUF | SDL_HWSURFACE);
     if(screen==NULL)
       	done = 1;
@@ -24,7 +24,6 @@ int main(int argc, char **argv)
     if(!engine.init())
         return 1;
         
-    
     while(!done)
     {
 		start = SDL_GetTicks();
@@ -32,17 +31,16 @@ int main(int argc, char **argv)
 		{
 			done = engine.handle_input(event);
 		}
-	
+
 		engine.show(screen);
 		engine.check();
 		SDL_Flip(screen);
 		
 		if((SDL_GetTicks() - start) < 1000 / WANTED_FPS )
 		{ 
-			 SDL_Delay( ( 1000 / WANTED_FPS ) - (SDL_GetTicks() - start));
+			 SDL_Delay(( 1000 / WANTED_FPS ) - (SDL_GetTicks() - start));
 		} 
     }
-    
 	SDL_Quit();
 
     (void) argc;

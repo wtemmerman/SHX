@@ -2,7 +2,7 @@
 #define	SHIP_HPP
 
 #include "constants.hpp"
-#include "game.hpp"
+
 
 class Game;
 
@@ -15,10 +15,12 @@ class Ship
 		SDL_Surface * spriteShip;
 		
     public:
-        Ship(Game * _game);
+        Ship(Game * _game, SDL_Surface * _screen);
         virtual ~Ship();
-        bool init(const char * file, int _x, int _y);
+        bool init(int _x, int _y);
         virtual void show(SDL_Surface * screen) = 0;
+        virtual int getH() = 0;
+        virtual int getW() = 0;
         int getX();
         int getY();
  };

@@ -2,20 +2,25 @@
 #define	BULLET_HPP
 
 #include "constants.hpp"
-
+#include <math.h>
 class Bullet
 {
     private:
         int x, y;
-        int xVel, yVel;
+        double angle, length;
 		SDL_Surface * spriteBullet;
 		bool toRemove;
+		int type;
     public:
         Bullet();
         ~Bullet();
-        bool init(SDL_Surface * _spriteBullet, int _x, int _y);
+        bool init(SDL_Surface * _spriteBullet, int _x, int _y, double _angle, double _length,int _type);
         void show(SDL_Surface * screen);
         bool getRemove();
+        int getX();
+        int getY();
+        int getW();
+        int getH();
  };
 
 #endif	/* BULLET_HPP */

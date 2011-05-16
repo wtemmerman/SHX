@@ -1,8 +1,9 @@
- #include "player.hpp"
+#include "player.hpp"
+#include "game.hpp"
  
- using namespace std;
+using namespace std;
  
- Player::Player(Game * _game):Ship(_game)
+Player::Player(Game * _game, SDL_Surface * _spriteShip):Ship(_game,_spriteShip)
 {
     previousTime = 0; 
 }
@@ -39,9 +40,9 @@ void Player::handle_input(SDL_Event event)
 
 void Player::show(SDL_Surface *screen)
 {
-	if (SDL_GetTicks() - previousTime > BULLET_TIME)
+	if (SDL_GetTicks() - previousTime > BULLET_TIME_PLAYER)
 	{
-		game->fireBullet();
+		game->fireBullet(TYPE_PLAYER, getX(), getY());
 		previousTime = SDL_GetTicks();
 	}
 	SDL_Rect r;
@@ -61,3 +62,6 @@ void Player::show(SDL_Surface *screen)
     r.y = y;
     SDL_BlitSurface(spriteShip, NULL, screen, &r);
 }
+
+int Player::getH(){ return PLAYER_HEIGHT; }
+int Player::getW(){ return PLAYER_WIDTH; }

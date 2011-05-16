@@ -1,18 +1,18 @@
  #include "ship.hpp"
+ #include "game.hpp"
  
  using namespace std;
  
- Ship::Ship(Game * _game)
+ Ship::Ship(Game * _game, SDL_Surface * _spriteShip)
 {
 	game = _game;
+	spriteShip = _spriteShip;
 	
     x = 0;
     y = 0;
 
     xVel = 0;
     yVel = 0;
-    
-    spriteShip = NULL;
 }
 
 Ship::~Ship()
@@ -20,29 +20,26 @@ Ship::~Ship()
 	SDL_FreeSurface(spriteShip);
 }
 
-bool Ship::init(const char * file, int _x, int _y)
+bool Ship::init(int _x, int _y)
 {
 	x = _x;
 	y = _y;
-	if(spriteShip!=NULL)
-	{
-		SDL_FreeSurface(spriteShip);
-		spriteShip = NULL;
-	}
-    spriteShip = SDL_LoadBMP(file);
-    SDL_SetColorKey(spriteShip,SDL_RLEACCEL | SDL_SRCCOLORKEY, SDL_MapRGB( spriteShip->format, 0x00, 0x00, 0x00 ));
-    if( spriteShip==NULL )
+	if( spriteShip==NULL )
 	{
     	cout << "Problem loading pictures from the Ship" << endl;
     	return false;
 	}
+    SDL_SetColorKey(spriteShip,SDL_RLEACCEL | SDL_SRCCOLORKEY, SDL_MapRGB( spriteShip->format, 0xff, 0x00, 0xff ));
     return true;
-    
 }
 
 void Ship::show(SDL_Surface *screen)
 {}
-
+int Ship::getH()
+{}
+int Ship::getW()
+{}
+   
 int Ship::getX()
 {
 	return x;
