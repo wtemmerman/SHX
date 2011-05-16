@@ -2,25 +2,19 @@
 #define	PLAYER_HPP
 
 #include "constants.hpp"
-#include "game.hpp"
+#include "ship.hpp"
 
 class Game;
 
-class Player
+class Player : public Ship
 {
     private:
-		Game * game;
-        int x, y;
-        int xVel, yVel;
-		SDL_Surface * spritePlayer;
+        unsigned int previousTime;
     public:
         Player(Game * _game);
-        ~Player();
-        bool init(const char * file);
+        virtual ~Player();
         void handle_input(SDL_Event event);
         void show(SDL_Surface * screen);
-        int getX();
-        int getY();
  };
 
 #endif	/* PLAYER_HPP */

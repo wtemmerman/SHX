@@ -43,8 +43,7 @@ bool Game::init(string file)
     bg = SDL_LoadBMP(s.data());
        
     inputfile >> s;  
-    playerInit = player->init(s.data());
-
+    playerInit = player->init(s.data(), SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
     inputfile >> s; 
     bullet = SDL_LoadBMP(s.data());
     if( bg==NULL || !playerInit || bullet==NULL)

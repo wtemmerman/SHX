@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
     SDL_WM_SetCaption("Shoot'em up xTrem", NULL);
-
+	//SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,250);
 	screen = SDL_SetVideoMode(SCREEN_WIDTH,SCREEN_HEIGHT, SCREEN_BPP, SDL_DOUBLEBUF | SDL_HWSURFACE);
     if(screen==NULL)
       	done = 1;

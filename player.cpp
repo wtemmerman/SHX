@@ -2,43 +2,13 @@
  
  using namespace std;
  
- Player::Player(Game * _game)
+ Player::Player(Game * _game):Ship(_game)
 {
-	game = _game;
-	
-    x = 0;
-    y = 0;
-
-    xVel = 0;
-    yVel = 0;
-    
-    spritePlayer = NULL;
+    previousTime = 0; 
 }
 
 Player::~Player()
-{
-	SDL_FreeSurface(spritePlayer);
-}
-
-bool Player::init(const char * file)
-{
-	x = SCREEN_WIDTH /2;
-	y = SCREEN_WIDTH /2;
-	if(spritePlayer!=NULL)
-	{
-		SDL_FreeSurface(spritePlayer);
-		spritePlayer = NULL;
-	}
-    spritePlayer = SDL_LoadBMP(file);
-    SDL_SetColorKey(spritePlayer,SDL_RLEACCEL | SDL_SRCCOLORKEY, SDL_MapRGB( spritePlayer->format, 0x00, 0x00, 0x00 ));
-    if( spritePlayer==NULL )
-	{
-    	cout << "Problem loading pictures from the Player" << endl;
-    	return false;
-	}
-    return true;
-    
-}
+{}
 
 void Player::handle_input(SDL_Event event)
 {
@@ -50,7 +20,6 @@ void Player::handle_input(SDL_Event event)
             case SDLK_DOWN: yVel += PLAYER_HEIGHT / 10; break;
             case SDLK_LEFT: xVel -= PLAYER_WIDTH / 7; break;
             case SDLK_RIGHT: xVel += PLAYER_WIDTH / 7; break;
-            case SDLK_SPACE: game->fireBullet();
             default: break;
         }
     }
@@ -70,6 +39,11 @@ void Player::handle_input(SDL_Event event)
 
 void Player::show(SDL_Surface *screen)
 {
+	if (SDL_GetTicks() - previousTime > BULLET_TIME)
+	{
+		game->fireBullet();
+		previousTime = SDL_GetTicks();
+	}
 	SDL_Rect r;
 	//cout << "x " << xVel << "y " << yVel << endl;
     x += xVel;
@@ -85,16 +59,5 @@ void Player::show(SDL_Surface *screen)
     }
     r.x = x;
     r.y = y;
-    SDL_BlitSurface(spritePlayer, NULL, screen, &r);
-}
-
-
-int Player::getX()
-{
-	return x;
-}
-
-int Player::getY()
-{
-	return y;
+    SDL_BlitSurface(spriteShip, NULL, screen, &r);
 }
