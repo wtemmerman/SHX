@@ -8,6 +8,8 @@
 	game = _game;
 	spriteShip = _spriteShip;
 	
+	toRemove = false;
+	
     x = 0;
     y = 0;
 
@@ -39,14 +41,9 @@ int Ship::getH()
 {}
 int Ship::getW()
 {}
-   
-int Ship::getX()
-{
-	return x;
-}
 
-int Ship::getY()
-{
-	return y;
-}
+bool Ship::getRemove(){	return toRemove; }
+void Ship::setRemove(bool _toRemove){ toRemove = _toRemove; }
+int Ship::getX(){ return x; }
+int Ship::getY(){ return y; }
 

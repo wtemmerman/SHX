@@ -7,6 +7,7 @@ Turret::Turret(Game * _game, SDL_Surface * _spriteShip):Ship(_game, _spriteShip)
 {
     previousTime = 0; 
     yVel = 2;
+    toRemove = false;
 }
 
 Turret::~Turret()
@@ -21,7 +22,13 @@ void Turret::show(SDL_Surface * screen)
 		game->fireBullet(TYPE_TURRET, getX(), getY());
 		previousTime = SDL_GetTicks();
 	}	
-
+	if( ( x < 0 - TURRET_WIDTH ) || 
+		( x > TURRET_WIDTH + SCREEN_WIDTH ) ||
+		( y < 0 - TURRET_HEIGHT) || 
+		( y > TURRET_HEIGHT + SCREEN_HEIGHT) )
+    {
+        setRemove(true);
+    }
     y += yVel;
     r.x = x;
     r.y = y;

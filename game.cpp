@@ -6,6 +6,7 @@ using namespace std;
 
 Game::Game()
 {
+	end = false;
     bg = NULL;
     bgX = bgY = 0;
     bulletsPlayer = vector<Bullet *>();
@@ -20,16 +21,16 @@ Game::~Game()
     SDL_FreeSurface(sTurret);
     SDL_FreeSurface(sbulletPlayer);
     SDL_FreeSurface(sbulletTurret);
+    for (vector<Ship *>::iterator it = enemys.begin(); 
+			it != enemys.end(); 
+			it++)
+		delete (*it);
     for (vector<Bullet *>::iterator it = bulletsPlayer.begin(); 
 			it != bulletsPlayer.end(); 
 			it++)
 		delete (*it);
 	for (vector<Bullet *>::iterator it = bulletsEnnemys.begin(); 
 			it != bulletsEnnemys.end(); 
-			it++)
-		delete (*it);
-	for (vector<Ship *>::iterator it = enemys.begin(); 
-			it != enemys.end(); 
 			it++)
 		delete (*it);
 }
@@ -105,9 +106,15 @@ void Game::show(SDL_Surface *screen)
     SDL_BlitSurface(bg,NULL,screen,&r);  
       
     player->show(screen);
-    for (vector<Ship *>::iterator it = enemys.begin();it != enemys.end();it++)
+    for (vector<Ship *>::iterator it = enemys.begin();it != enemys.end();)
 	{
-		(*it)->show(screen);	
+		if((*it)->getRemove())
+			enemys.erase(it);
+		else 
+		{
+			(*it)->show(screen);
+			it++;	
+		}
 	}
 	for (vector<Bullet *>::iterator it = bulletsPlayer.begin();it != bulletsPlayer.end();)
 	{
@@ -130,20 +137,34 @@ void Game::show(SDL_Surface *screen)
 		}
 	}
 	//Collision test 
-	for (vector<Bullet *>::iterator itb = bulletsPlayer.begin();itb != bulletsPlayer.end();itb++)
+	for (vector<Ship *>::iterator ite = enemys.begin();ite != enemys.end();ite++)
 	{
-		for (vector<Ship *>::iterator ite = enemys.begin();ite != enemys.end();ite++)
+		for (vector<Bullet *>::iterator itb = bulletsPlayer.begin();itb != bulletsPlayer.end();)
 		{
-			if(Collision((*ite), (*itb)))
+			if(Collision(*ite, *itb))
+			{
 				cout << "Bullet player touche enemys : o" << endl;
+				bulletsPlayer.erase(itb);
+			}
+			else
+				itb++;
 		}
 	}
 	
-	for (vector<Bullet *>::iterator itb = bulletsEnnemys.begin();itb != bulletsEnnemys.end();itb++)
+	for (vector<Bullet *>::iterator itb = bulletsEnnemys.begin();itb != bulletsEnnemys.end();)
 	{
 		if(Collision(player, (*itb)))
+		{
 			cout << "Bullet Enemy touche Player : o" << endl;
+			bulletsEnnemys.erase(itb);
+			player->setLifes(player->getLifes() - 1);
+			cout << "Player a " << player->getLifes() << "maintenant" << endl;
+		}
+		else 
+			itb++;
 	}
+	
+	checkEnd();
 }
 
 void Game::fireBullet(int _type, int _x, int _y)
@@ -158,9 +179,11 @@ void Game::fireBullet(int _type, int _x, int _y)
 	if(_type == TYPE_TURRET)
 	{
 		double hypothenuse = sqrt(pow(player->getX() - _x,2) + pow(player->getY() - _y,2));
-		double side = (double)player->getY() - _y;
+		double side = (double)player->getX() - _x;
+		if(player->getX() < _x)
+			side = -side;
 		double angle = acos( side / hypothenuse);
-		//cout << hypothenuse << " --- " << angle <<  " ---- " << player->getY() - turret->getY() << endl;
+		//cout << hypothenuse << " --- " << angle <<  " ---- " << player->getX() - _x << endl;
 		if(!b->init(sbulletTurret, _x, _y, angle, hypothenuse/100, _type))
 			cout << "Problème lors de l initialisation d une bullet" << endl;
 		bulletsEnnemys.push_back(b);
@@ -179,7 +202,8 @@ bool Game::Collision(Ship * _ship, Bullet * _bullet)
 }
 void Game::checkEnd()
 {
-	//to do
+	if(player->getLifes() == 0)
+		end = true;
 }
 
 bool Game::getEnd()

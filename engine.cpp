@@ -100,9 +100,10 @@ void Engine::check()
 {
     if(!inMenu)
 	{	
-        if(!game->getEnd())
+        if(game->getEnd())
         {
-			//cout<< "The game is not over" << endl;
+			cout << "Game Over" << endl;
+			end();
 		}
 	}
 }

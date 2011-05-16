@@ -13,7 +13,7 @@ class Ship
         int x, y;
         int xVel, yVel;
 		SDL_Surface * spriteShip;
-		
+		bool toRemove;
     public:
         Ship(Game * _game, SDL_Surface * _screen);
         virtual ~Ship();
@@ -21,6 +21,8 @@ class Ship
         virtual void show(SDL_Surface * screen) = 0;
         virtual int getH() = 0;
         virtual int getW() = 0;
+        bool getRemove();
+        void setRemove(bool _toRemove);
         int getX();
         int getY();
  };

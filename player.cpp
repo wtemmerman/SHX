@@ -6,6 +6,8 @@ using namespace std;
 Player::Player(Game * _game, SDL_Surface * _spriteShip):Ship(_game,_spriteShip)
 {
     previousTime = 0; 
+    
+    lifes = 3;
 }
 
 Player::~Player()
@@ -65,3 +67,5 @@ void Player::show(SDL_Surface *screen)
 
 int Player::getH(){ return PLAYER_HEIGHT; }
 int Player::getW(){ return PLAYER_WIDTH; }
+int Player::getLifes(){ return lifes; }
+void Player::setLifes(int _lifes){ lifes = _lifes; }
