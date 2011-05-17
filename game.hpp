@@ -14,10 +14,13 @@ class Game
 {
     private: 
     	SDL_Surface * bg, * sPlayer, * sbulletPlayer, * sTurret, * sbulletTurret;  
+    	SDL_Surface * levelTest;
     	std::vector<Bullet *> bulletsEnnemys;
     	std::vector<Bullet *> bulletsPlayer;
     	std::vector<Ship *> enemys;	
+    	std::vector<std::vector<int > > lvlInfos;
 		int bgX, bgY; 
+		int nextInfo, lineBg;
     	bool end;
         void checkEnd();
         Player * player;
@@ -26,7 +29,10 @@ class Game
     	~Game();
 		void handle_input(SDL_Event event);
         bool init(std::string file);
-    	void show(SDL_Surface *screen);
+    	void show(SDL_Surface * _screen);
+    	Uint32 getPixel(SDL_Surface *surface, int x, int y);
+    	void loadLevel(SDL_Surface * _imgLvl);
+    	void createEnemys();
     	bool getEnd();
     	void fireBullet(int _type, int _x, int _y);
     	bool Collision(Ship * _ship, Bullet * _bullet);

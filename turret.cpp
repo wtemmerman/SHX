@@ -6,7 +6,7 @@ using namespace std;
 Turret::Turret(Game * _game, SDL_Surface * _spriteShip):Ship(_game, _spriteShip)
 {
     previousTime = 0; 
-    yVel = 2;
+    yVel = 1;
     toRemove = false;
 }
 
@@ -24,7 +24,7 @@ void Turret::show(SDL_Surface * screen)
 	}	
 	if( ( x < 0 - TURRET_WIDTH ) || 
 		( x > TURRET_WIDTH + SCREEN_WIDTH ) ||
-		( y < 0 - TURRET_HEIGHT) || 
+		//( y < 0 - TURRET_HEIGHT) || 
 		( y > TURRET_HEIGHT + SCREEN_HEIGHT) )
     {
         setRemove(true);
