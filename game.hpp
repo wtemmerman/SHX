@@ -33,10 +33,14 @@ class Game
     	Uint32 getPixel(SDL_Surface *surface, int x, int y);
     	void loadLevel(SDL_Surface * _imgLvl);
     	void createEnemys();
+    	void addPlayerBullet(Bullet * _bulletPlayer);
+    	void addEnemyBullet(Bullet * _bulletPlayer);
     	bool getEnd();
-    	void fireBullet(int _type, int _x, int _y);
     	int getBgSpeed();
     	void setBgSpeed(int _speed);
+    	SDL_Surface * getSbulletPlayer();
+    	SDL_Surface * getSbulletEnemy();
+    	Ship * getPlayer();
 };
 #endif
 

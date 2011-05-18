@@ -52,7 +52,7 @@ void Player::show(SDL_Surface *screen)
 {
 	if (SDL_GetTicks() - previousTime > BULLET_TIME_PLAYER)
 	{
-		game->fireBullet(TYPE_PLAYER, getX(), getY());
+		shoot();
 		previousTime = SDL_GetTicks();
 	}
 	SDL_Rect r;
@@ -76,6 +76,18 @@ void Player::show(SDL_Surface *screen)
 		SDL_BlitSurface(spriteShip, NULL, screen, &r);
 }
 
+void Player::shoot()
+{
+	Bullet * b = new Bullet();
+	//double angle = atan2( _y - player->getY(), _x - player->getX());
+	double angle = atan2( 0, 1);
+	if(!b->init(game->getSbulletPlayer(), 
+				getX() + PLAYER_WIDTH/2,
+				getY(), 
+				angle, 3))
+		cout << "Problème lors de l initialisation d une bullet" << endl;
+	game->addPlayerBullet(b);
+}
 int Player::getH(){ return PLAYER_HEIGHT; }
 int Player::getW(){ return PLAYER_WIDTH; }
 int Player::getLifes(){ return lifes; }

@@ -19,6 +19,7 @@ class Player : public Ship
         virtual ~Player();
         void handle_input(SDL_Event event);
         void show(SDL_Surface * screen);
+        void shoot();
         int getH();
         int getW();
         int getLifes();

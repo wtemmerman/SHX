@@ -177,6 +177,16 @@ void Game::createEnemys()
 		nextInfo = bg->h ;
 }
 
+void Game::addPlayerBullet(Bullet * _bulletPlayer)
+{
+	bulletsPlayer.push_back(_bulletPlayer);
+}
+
+void Game::addEnemyBullet(Bullet * _bulletEnemy)
+{
+	bulletsEnnemys.push_back(_bulletEnemy);
+}
+
 void Game::show(SDL_Surface * _screen)
 {
 	SDL_Rect r;
@@ -202,7 +212,7 @@ void Game::show(SDL_Surface * _screen)
 	else 
 		setBgSpeed(0);
 	
-    player->show(_screen);
+
     for (vector<Ship *>::iterator it = enemys.begin();it != enemys.end();)
 	{
 		if((*it)->getRemove())
@@ -233,6 +243,7 @@ void Game::show(SDL_Surface * _screen)
 			it++;	
 		}
 	}
+	player->show(_screen);
 	
 	//Collision test 
 	for (vector<Bullet *>::iterator itb = bulletsEnnemys.begin();itb != bulletsEnnemys.end();)
@@ -273,33 +284,8 @@ void Game::show(SDL_Surface * _screen)
 		else		
 			ite++;
 		deleteEnemy = false;
-	}
-	
+	}	
 	checkEnd();
-}
-
-void Game::fireBullet(int _type, int _x, int _y)
-{
-	Bullet * b = new Bullet();
-	if(_type == TYPE_PLAYER)
-	{
-		if(!b->init(sbulletPlayer, _x, _y, atan2(-1,0), 3, _type))
-			cout << "Problème lors de l initialisation d une bullet" << endl;
-		bulletsPlayer.push_back(b);
-	}
-	if(_type == TYPE_TURRET)
-	{
-		//double hypothenuse = sqrt(pow(player->getX() - _x,2) + pow(player->getY() - _y,2));
-		//double side = (double)player->getX() - _x;
-		//if(player->getX() < _x)
-		//	side = -side;
-		//double angle = acos( side / hypothenuse);
-		double angle = atan2( _y - player->getY(), _x - player->getX());
-		//cout << hypothenuse << " --- " << angle <<  " ---- " << player->getX() - _x << endl;
-		if(!b->init(sbulletTurret, _x, _y, angle, 3, _type))
-			cout << "Problème lors de l initialisation d une bullet" << endl;
-		bulletsEnnemys.push_back(b);
-	}
 }
 
 void Game::checkEnd()
@@ -311,3 +297,6 @@ void Game::checkEnd()
 bool Game::getEnd(){ return end; }
 int Game::getBgSpeed(){ return bgSpeed; }
 void Game::setBgSpeed(int _speed){ bgSpeed = _speed; }
+SDL_Surface * Game::getSbulletPlayer(){ return sbulletPlayer; }
+SDL_Surface * Game::getSbulletEnemy(){ return sbulletTurret; }
+Ship * Game::getPlayer(){ return player; }

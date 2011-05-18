@@ -17,7 +17,7 @@ class Bullet
     public:
         Bullet();
         ~Bullet();
-        bool init(SDL_Surface * _spriteBullet, int _x, int _y, double _angle, double _length,int _type);
+        bool init(SDL_Surface * _spriteBullet, int _x, int _y, double _angle, double _length);
         void show(SDL_Surface * screen);
         bool getRemove();
         bool collision(Ship * _ship);

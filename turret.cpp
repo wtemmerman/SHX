@@ -19,7 +19,7 @@ void Turret::show(SDL_Surface * screen)
 
 	if (SDL_GetTicks() - previousTime > BULLET_TIME_TURRET)
 	{
-		game->fireBullet(TYPE_TURRET, getX(), getY());
+		shoot();
 		previousTime = SDL_GetTicks();
 	}	
 	if( ( x < 0 - TURRET_WIDTH ) || 
@@ -33,6 +33,19 @@ void Turret::show(SDL_Surface * screen)
     r.x = x;
     r.y = y;
     SDL_BlitSurface(spriteShip, NULL, screen, &r);
+}
+
+void Turret::shoot()
+{
+	Bullet * b = new Bullet();
+	//double angle = atan2( _y - player->getY(), _x - player->getX());
+	double angle = atan2(game->getPlayer()->getX() - getX(), game->getPlayer()->getY() - getY());
+	if(!b->init(game->getSbulletEnemy(), 
+				getX() + TURRET_WIDTH/2 - BULLET_WIDTH/2,
+				getY() + TURRET_HEIGHT/2 - BULLET_HEIGHT/2, 
+				angle, 3))
+		cout << "Problème lors de l initialisation d une bullet" << endl;
+	game->addEnemyBullet(b);
 }
 
 int Turret::getH(){ return TURRET_HEIGHT; }

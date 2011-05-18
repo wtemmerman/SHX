@@ -14,6 +14,7 @@ class Turret : public Ship
         Turret(Game * _game, SDL_Surface * _spriteShip);
         virtual ~Turret();
         void show(SDL_Surface * screen);
+        void shoot();
         int getH();
         int getW();
  };

@@ -18,6 +18,7 @@ class Ship
         virtual ~Ship();
         bool init(int _x, int _y);
         virtual void show(SDL_Surface * screen) = 0;
+        virtual void shoot()= 0;
         virtual int getH() = 0;
         virtual int getW() = 0;
         bool getRemove();

@@ -36,6 +36,8 @@ bool Ship::init(int _x, int _y)
     return true;
 }
 
+void Ship::shoot()
+{}
 void Ship::show(SDL_Surface *screen)
 {}
 int Ship::getH()

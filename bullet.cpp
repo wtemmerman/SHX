@@ -22,23 +22,12 @@ Bullet::~Bullet()
 	SDL_FreeSurface(spriteBullet);
 }
 
-bool Bullet::init(SDL_Surface * _spriteBullet, int _x, int _y, double _angle, double _length,int _type)
+bool Bullet::init(SDL_Surface * _spriteBullet, int _x, int _y, double _angle, double _length)
 {
-	type = _type;
-	if(type == TYPE_PLAYER)
-	{
-		x = _x + PLAYER_WIDTH/2 - BULLET_WIDTH/2;
-		y = _y;
-		angle = PI * (_angle) / 180 ;		
-	}
-	else if(type == TYPE_TURRET)
-	{
-		x = _x + TURRET_WIDTH/2 - BULLET_WIDTH/2;
-		y = _y + TURRET_HEIGHT/2 - BULLET_HEIGHT/2;
-		angle = _angle;
-		cout << angle << endl;
-	}
+	angle = _angle;
 	length = _length;
+	x = _x;
+	y = _y;
 	if(spriteBullet != NULL)
 	{
 		SDL_FreeSurface(spriteBullet);
@@ -53,8 +42,8 @@ bool Bullet::init(SDL_Surface * _spriteBullet, int _x, int _y, double _angle, do
 void Bullet::show(SDL_Surface *screen)
 {
 	SDL_Rect r;
-    x -= cos(angle) * length;
-	y -= sin(angle) * length;
+    x -= sin(angle) * length;
+	y -= cos(angle) * length;
     if( ( x < 0 - BULLET_WIDTH ) || 
 		( x > BULLET_WIDTH + SCREEN_WIDTH ) ||
 		( y < 0 - BULLET_HEIGHT) || 
