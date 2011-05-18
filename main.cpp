@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 	}
     SDL_WM_SetCaption("Shoot'em up xTrem", NULL);
 
-	screen = SDL_SetVideoMode(SCREEN_WIDTH,SCREEN_HEIGHT, SCREEN_BPP, SDL_DOUBLEBUF | SDL_HWSURFACE);
+	screen = SDL_SetVideoMode(SCREEN_WIDTH_HUD,SCREEN_HEIGHT, SCREEN_BPP, SDL_DOUBLEBUF | SDL_HWSURFACE);
     if(screen==NULL)
       	done = 1;
 

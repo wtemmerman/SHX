@@ -3,7 +3,6 @@
 
 #include "constants.hpp"
 
-
 class Game;
 
 class Ship

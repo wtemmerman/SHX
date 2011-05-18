@@ -26,6 +26,9 @@ Game::~Game()
     SDL_FreeSurface(sTurret);
     SDL_FreeSurface(sbulletPlayer);
     SDL_FreeSurface(sbulletTurret);
+    SDL_FreeSurface(levelTest);
+
+    	
     for (vector<Ship *>::iterator it = enemys.begin(); 
 			it != enemys.end(); 
 			it++)
@@ -232,41 +235,46 @@ void Game::show(SDL_Surface * _screen)
 	}
 	
 	//Collision test 
-	for (vector<Ship *>::iterator ite = enemys.begin();ite != enemys.end();ite++)
+	for (vector<Bullet *>::iterator itb = bulletsEnnemys.begin();itb != bulletsEnnemys.end();)
+	{
+		if((*itb)->collision(player))
+		{		
+
+			if(!player->getUntouchable())
+			{
+				player->setUntouchable(true);		
+				player->setLifes(player->getLifes() - 1);	
+				cout << "Player lifes "<< player-> getLifes()<< endl;
+			}
+			bulletsEnnemys.erase(itb);				
+			//break;
+		}
+		else 
+			itb++;
+	}
+	if(SDL_GetTicks() - player->getTimeUntouchable() > TIME_UNTOUCHABLE)
+		player->setUntouchable(false);
+	
+	bool deleteEnemy = false;		
+	for (vector<Ship *>::iterator ite = enemys.begin();ite != enemys.end();)
 	{
 		for (vector<Bullet *>::iterator itb = bulletsPlayer.begin();itb != bulletsPlayer.end();)
 		{
-			if(Collision(*ite, *itb))
-			{
-				cout << "Bullet player touche enemys : o" << endl;
+			if((*itb)->collision(*ite) )
+			{					
 				bulletsPlayer.erase(itb);
-				enemys.erase(ite);
+				deleteEnemy = true;
 			}
 			else
 				itb++;
 		}
+		if(deleteEnemy)		
+			enemys.erase(ite);
+		else		
+			ite++;
+		deleteEnemy = false;
 	}
 	
-	if(!player->getUntouchable())
-	{
-		for (vector<Bullet *>::iterator itb = bulletsEnnemys.begin();itb != bulletsEnnemys.end();)
-		{
-			if(Collision(player, (*itb)))
-			{
-				cout << "Player " << player-> getX() << ":" << player->getY()<< " BUllet " << (*itb)->getX() << ":" << (*itb)->getY()<< endl;
-				bulletsEnnemys.erase(itb);
-				player->setUntouchable(true);		
-				player->setLifes(player->getLifes() - 1);
-				cout << "Player a " << player->getLifes() << "maintenant" << endl;
-				
-				break;
-			}
-			else 
-				itb++;
-		}
-	}
-	if(SDL_GetTicks() - player->getTimeUntouchable() > TIME_UNTOUCHABLE)
-		player->setUntouchable(false);
 	checkEnd();
 }
 
@@ -275,17 +283,18 @@ void Game::fireBullet(int _type, int _x, int _y)
 	Bullet * b = new Bullet();
 	if(_type == TYPE_PLAYER)
 	{
-		if(!b->init(sbulletPlayer, _x, _y, 90, -3, _type))
+		if(!b->init(sbulletPlayer, _x, _y, atan2(-1,0), 3, _type))
 			cout << "Problème lors de l initialisation d une bullet" << endl;
 		bulletsPlayer.push_back(b);
 	}
 	if(_type == TYPE_TURRET)
 	{
-		double hypothenuse = sqrt(pow(player->getX() - _x,2) + pow(player->getY() - _y,2));
-		double side = (double)player->getX() - _x;
-		if(player->getX() < _x)
-			side = -side;
-		double angle = acos( side / hypothenuse);
+		//double hypothenuse = sqrt(pow(player->getX() - _x,2) + pow(player->getY() - _y,2));
+		//double side = (double)player->getX() - _x;
+		//if(player->getX() < _x)
+		//	side = -side;
+		//double angle = acos( side / hypothenuse);
+		double angle = atan2( _y - player->getY(), _x - player->getX());
 		//cout << hypothenuse << " --- " << angle <<  " ---- " << player->getX() - _x << endl;
 		if(!b->init(sbulletTurret, _x, _y, angle, 3, _type))
 			cout << "Problème lors de l initialisation d une bullet" << endl;
@@ -293,16 +302,6 @@ void Game::fireBullet(int _type, int _x, int _y)
 	}
 }
 
-bool Game::Collision(Ship * _ship, Bullet * _bullet)
-{
-	if((_ship->getX() >= _bullet->getX()+ _bullet->getW())      // trop à droite
-	|| (_ship->getX() +  _ship->getW()	<= _bullet->getX()) // trop à gauche
-	|| (_ship->getY() >= _bullet->getY()+ _bullet->getH()) // trop en bas
-	|| (_ship->getY() +  _ship->getH() 	<= _bullet->getY()))  // trop en haut
-          return false; 
-   else
-          return true; 
-}
 void Game::checkEnd()
 {
 	if(player->getLifes() < 0)

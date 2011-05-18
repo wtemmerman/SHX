@@ -20,6 +20,7 @@
 Ship::~Ship()
 {
 	SDL_FreeSurface(spriteShip);
+	delete game;
 }
 
 bool Ship::init(int _x, int _y)

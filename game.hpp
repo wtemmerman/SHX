@@ -35,7 +35,6 @@ class Game
     	void createEnemys();
     	bool getEnd();
     	void fireBullet(int _type, int _x, int _y);
-    	bool Collision(Ship * _ship, Bullet * _bullet);
     	int getBgSpeed();
     	void setBgSpeed(int _speed);
 };

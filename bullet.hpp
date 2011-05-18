@@ -2,7 +2,10 @@
 #define	BULLET_HPP
 
 #include "constants.hpp"
+#include "ship.hpp"
 #include <math.h>
+
+
 class Bullet
 {
     private:
@@ -17,6 +20,7 @@ class Bullet
         bool init(SDL_Surface * _spriteBullet, int _x, int _y, double _angle, double _length,int _type);
         void show(SDL_Surface * screen);
         bool getRemove();
+        bool collision(Ship * _ship);
         int getX();
         int getY();
         int getW();

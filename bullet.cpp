@@ -36,6 +36,7 @@ bool Bullet::init(SDL_Surface * _spriteBullet, int _x, int _y, double _angle, do
 		x = _x + TURRET_WIDTH/2 - BULLET_WIDTH/2;
 		y = _y + TURRET_HEIGHT/2 - BULLET_HEIGHT/2;
 		angle = _angle;
+		cout << angle << endl;
 	}
 	length = _length;
 	if(spriteBullet != NULL)
@@ -52,8 +53,8 @@ bool Bullet::init(SDL_Surface * _spriteBullet, int _x, int _y, double _angle, do
 void Bullet::show(SDL_Surface *screen)
 {
 	SDL_Rect r;
-    x += cos(angle) * length;
-	y += sin(angle) * length;
+    x -= cos(angle) * length;
+	y -= sin(angle) * length;
     if( ( x < 0 - BULLET_WIDTH ) || 
 		( x > BULLET_WIDTH + SCREEN_WIDTH ) ||
 		( y < 0 - BULLET_HEIGHT) || 
@@ -64,6 +65,17 @@ void Bullet::show(SDL_Surface *screen)
     r.x = x;
     r.y = y;
     SDL_BlitSurface(spriteBullet, NULL, screen, &r);
+}
+
+bool Bullet::collision(Ship * _ship)
+{
+	if((_ship->getX() >= this->getX()+ this->getW())      // trop à droite
+	|| (_ship->getX() +  _ship->getW()	<= this->getX()) // trop à gauche
+	|| (_ship->getY() >= this->getY()+ this->getH()) // trop en bas
+	|| (_ship->getY() +  _ship->getH() 	<= this->getY()))  // trop en haut
+          return false; 
+   else
+          return true; 
 }
 
 bool Bullet::getRemove()

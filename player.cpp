@@ -17,7 +17,9 @@ Player::Player(Game * _game, SDL_Surface * _spriteShip, SDL_Surface * _spriteUnt
 }
 
 Player::~Player()
-{}
+{
+	SDL_FreeSurface(sUntouchable);
+}
 
 void Player::handle_input(SDL_Event event)
 {
