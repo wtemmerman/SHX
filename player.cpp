@@ -80,7 +80,7 @@ void Player::shoot()
 {
 	Bullet * b = new Bullet();
 	//double angle = atan2( _y - player->getY(), _x - player->getX());
-	double angle = atan2( 0, 1);
+	double angle = atan2( -1, 0);
 	if(!b->init(game->getSbulletPlayer(), 
 				getX() + PLAYER_WIDTH/2,
 				getY(), 

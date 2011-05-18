@@ -9,7 +9,7 @@
 class Bullet
 {
     private:
-        int x, y;
+        int x, y, xVel, yVel;
         double angle, length;
 		SDL_Surface * spriteBullet;
 		bool toRemove;

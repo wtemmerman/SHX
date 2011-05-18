@@ -6,7 +6,9 @@
 {
     x = 0;
     y = 0;
-
+	xVel = 0;
+	yVel = 0;
+	
     angle = 0.0;
     length = 0.0;
    
@@ -28,6 +30,8 @@ bool Bullet::init(SDL_Surface * _spriteBullet, int _x, int _y, double _angle, do
 	length = _length;
 	x = _x;
 	y = _y;
+	xVel = cos(angle) * length;;
+	yVel = sin(angle) * length;
 	if(spriteBullet != NULL)
 	{
 		SDL_FreeSurface(spriteBullet);
@@ -42,8 +46,8 @@ bool Bullet::init(SDL_Surface * _spriteBullet, int _x, int _y, double _angle, do
 void Bullet::show(SDL_Surface *screen)
 {
 	SDL_Rect r;
-    x -= sin(angle) * length;
-	y -= cos(angle) * length;
+    x += xVel;
+	y += yVel;
     if( ( x < 0 - BULLET_WIDTH ) || 
 		( x > BULLET_WIDTH + SCREEN_WIDTH ) ||
 		( y < 0 - BULLET_HEIGHT) || 

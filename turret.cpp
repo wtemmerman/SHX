@@ -39,7 +39,8 @@ void Turret::shoot()
 {
 	Bullet * b = new Bullet();
 	//double angle = atan2( _y - player->getY(), _x - player->getX());
-	double angle = atan2(game->getPlayer()->getX() - getX(), game->getPlayer()->getY() - getY());
+	double angle = atan2( game->getPlayer()->getY() - getY(),game->getPlayer()->getX() - getX());
+	//double angle = atan2( 0, -1);
 	if(!b->init(game->getSbulletEnemy(), 
 				getX() + TURRET_WIDTH/2 - BULLET_WIDTH/2,
 				getY() + TURRET_HEIGHT/2 - BULLET_HEIGHT/2, 
