@@ -3,8 +3,11 @@
  
 using namespace std;
  
-Player::Player(Game * _game, SDL_Surface * _spriteShip):Ship(_game,_spriteShip)
+Player::Player(Game * _game, SDL_Surface * _spriteShip, SDL_Surface * _spriteUntouch):Ship(_game,_spriteShip)
 {
+	sUntouchable = _spriteUntouch;
+	SDL_SetColorKey(sUntouchable,SDL_RLEACCEL | SDL_SRCCOLORKEY, SDL_MapRGB( spriteShip->format, 0xff, 0x00, 0xff ));
+	
     previousTime = 0; 
     
     lifes = PLAYER_LIFES;
@@ -65,7 +68,10 @@ void Player::show(SDL_Surface *screen)
     }
     r.x = x;
     r.y = y;
-    SDL_BlitSurface(spriteShip, NULL, screen, &r);
+    if(untouchable)
+		SDL_BlitSurface(sUntouchable, NULL, screen, &r);
+	else
+		SDL_BlitSurface(spriteShip, NULL, screen, &r);
 }
 
 int Player::getH(){ return PLAYER_HEIGHT; }
@@ -74,8 +80,10 @@ int Player::getLifes(){ return lifes; }
 void Player::setLifes(int _lifes){ lifes = _lifes; }
 void Player::setUntouchable(bool _state)
 { 
-	untouchable = _state;
-	timeUntouchable = SDL_GetTicks();
-}
+	if(_state)
+		timeUntouchable = SDL_GetTicks();
+	untouchable = _state;		
+		
+}	
 bool Player::getUntouchable(){ return untouchable; }
 Uint32 Player::getTimeUntouchable(){ return timeUntouchable; }

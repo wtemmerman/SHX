@@ -6,7 +6,7 @@ using namespace std;
 Turret::Turret(Game * _game, SDL_Surface * _spriteShip):Ship(_game, _spriteShip)
 {
     previousTime = 0; 
-    yVel = 1;
+    yVel = _game->getBgSpeed();
     toRemove = false;
 }
 

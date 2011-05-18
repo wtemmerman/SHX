@@ -28,8 +28,8 @@ const int TURRET_HEIGHT = 50;
 const int BULLET_WIDTH = 5;
 const int BULLET_HEIGHT = 5;
 
-const unsigned int BULLET_TIME_PLAYER = 200;
-const unsigned int BULLET_TIME_TURRET = 300;
+const unsigned int BULLET_TIME_PLAYER = 400;
+const unsigned int BULLET_TIME_TURRET = 500;
 const unsigned int TIME_UNTOUCHABLE = 3000;
 
 const unsigned int WANTED_FPS = 40; // 1000/40 =  25 fps

@@ -13,13 +13,13 @@ class Turret;
 class Game
 {
     private: 
-    	SDL_Surface * bg, * sPlayer, * sbulletPlayer, * sTurret, * sbulletTurret;  
+    	SDL_Surface * bg, * sPlayer, * sUntouchPlayer, * sbulletPlayer, * sTurret, * sbulletTurret;  
     	SDL_Surface * levelTest;
     	std::vector<Bullet *> bulletsEnnemys;
     	std::vector<Bullet *> bulletsPlayer;
     	std::vector<Ship *> enemys;	
     	std::vector<std::vector<int > > lvlInfos;
-		int bgX, bgY; 
+		int bgX, bgY, bgSpeed; 
 		int nextInfo, lineBg;
     	bool end;
         void checkEnd();
@@ -36,6 +36,8 @@ class Game
     	bool getEnd();
     	void fireBullet(int _type, int _x, int _y);
     	bool Collision(Ship * _ship, Bullet * _bullet);
+    	int getBgSpeed();
+    	void setBgSpeed(int _speed);
 };
 #endif
 
