@@ -103,8 +103,8 @@ void Engine::check()
 	{	
         if(game->getEnd())
         {
-			cout << "Game Over" << endl;
-			end();
+			delete game;
+			switchFonctions();
 		}
 	}
 }

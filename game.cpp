@@ -31,6 +31,7 @@ Game::~Game()
     SDL_FreeSurface(sbulletTurret);
     SDL_FreeSurface(levelTest);
 	SDL_FreeSurface(sBossLvl1);
+	SDL_FreeSurface(sUntouchBoss);
     	
     for (vector<Ship *>::iterator it = enemys.begin(); 
 			it != enemys.end(); 
@@ -90,8 +91,12 @@ bool Game::init(string file)
 
 	inputfile >> s;
 	sBossLvl1 = SDL_LoadBMP(s.data());
+	
+	inputfile >> s;
+	sUntouchBoss = SDL_LoadBMP(s.data());
     if( bg==NULL || sPlayer==NULL || sUntouchPlayer == NULL || sPlayerLife == NULL || 
-    sTurret==NULL || sbulletPlayer==NULL || sbulletTurret==NULL || levelTest==NULL || sBossLvl1 == NULL)
+    sTurret==NULL || sbulletPlayer==NULL || sbulletTurret==NULL || levelTest==NULL || 
+    sBossLvl1 == NULL || sUntouchBoss == NULL)
 	{
     	cout << "Problem loading pictures from the Game" << endl;
     	return false;
@@ -172,7 +177,7 @@ void Game::createEnemies()
 	for(unsigned int i = lvlInfos.back().size()-1; i > 0; i--)
 	{	
 		Turret *t;
-		t = new Turret(this, sTurret);
+		t = new Turret(this, sTurret, NULL);
 		if(nextInfo < SCREEN_HEIGHT)
 		{
 			t->init(lvlInfos.back()[i]*sTurret->h, SCREEN_HEIGHT - lvlInfos.back().front() * sTurret->h);
@@ -182,7 +187,7 @@ void Game::createEnemies()
 			if(lvlInfos.back()[i] == -1)
 			{			
 				BossLvl1 * boss1;
-				boss1 = new BossLvl1(this, sBossLvl1);
+				boss1 = new BossLvl1(this, sBossLvl1, sUntouchBoss);
 				boss1->init(200, -sBossLvl1->h);
 				enemys.push_back(boss1);
 			}
@@ -215,7 +220,6 @@ void Game::show(SDL_Surface * _screen)
 {
 	SDL_Rect r;
 	bgY += getBgSpeed(); 
-	//If the background has gone too far 
 	if( bgY >= 0 ) 
 	{ 
 		bgY = -bg->h; 
@@ -274,7 +278,6 @@ void Game::show(SDL_Surface * _screen)
 	{
 		if((player)->collision(*itb))
 		{		
-
 			if(!player->getUntouchable())
 			{
 				player->setUntouchable(true);		
@@ -286,18 +289,29 @@ void Game::show(SDL_Surface * _screen)
 		else 
 			itb++;
 	}
-	if(SDL_GetTicks() - player->getTimeUntouchable() > TIME_UNTOUCHABLE)
-		player->setUntouchable(false);
 			
 	for (vector<Ship *>::iterator ite = enemys.begin();ite != enemys.end();)
 	{
 		for (vector<Bullet *>::iterator itb = bulletsPlayer.begin();itb != bulletsPlayer.end();)
 		{
 			if((*ite)->collision(*itb) )
-			{					
-				hud->changeScore(TURRET_POINT);
+			{				
+				if((*ite)->getLifes() > 1)	
+				{
+					if(!(*ite)->getUntouchable())
+					{
+						hud->changeScore(TURRET_POINT);
+						(*ite)->setUntouchable(true);
+						(*ite)->setLifes(-1);
+						cout << "Boss lifes "<< (*ite)->getLifes()<< endl;
+					}
+				}
+				else
+				{
+					hud->changeScore(TURRET_POINT);
+					(*ite)->setLifes(-1);
+				}
 				bulletsPlayer.erase(itb);
-				(*ite)->setLifes(-1);
 			}
 			else
 				itb++;

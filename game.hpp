@@ -15,7 +15,7 @@ class Hud;
 class Game
 {
     private: 
-    	SDL_Surface * bg, * sPlayer, * sUntouchPlayer, * sPlayerLife, * sbulletPlayer, * sTurret, * sbulletTurret, * sBossLvl1;  
+    	SDL_Surface * bg, * sPlayer, * sUntouchPlayer, * sPlayerLife, * sbulletPlayer, * sTurret, * sbulletTurret, * sBossLvl1, * sUntouchBoss;  
     	SDL_Surface * levelTest;
     	std::vector<Bullet *> bulletsEnnemys;
     	std::vector<Bullet *> bulletsPlayer;

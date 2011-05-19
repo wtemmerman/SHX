@@ -16,9 +16,9 @@ class Bullet
 		bool toRemove;
 		int type;
     public:
-        Bullet();
+        Bullet(SDL_Surface * _spriteBullet);
         ~Bullet();
-        bool init(SDL_Surface * _spriteBullet, int _x, int _y, double _angle, double _length);
+        bool init(int _x, int _y, double _angle, double _length);
         void show(SDL_Surface * screen);
         bool getRemove();
         int getX();

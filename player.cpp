@@ -3,23 +3,13 @@
  
 using namespace std;
  
-Player::Player(Game * _game, SDL_Surface * _spriteShip, SDL_Surface * _spriteUntouch):Ship(_game,_spriteShip)
+Player::Player(Game * _game, SDL_Surface * _spriteShip, SDL_Surface * _spriteUntouch):Ship(_game,_spriteShip, _spriteUntouch)
 {
-	sUntouchable = _spriteUntouch;
-	SDL_SetColorKey(sUntouchable,SDL_RLEACCEL | SDL_SRCCOLORKEY, SDL_MapRGB( sUntouchable->format, 0xff, 0x00, 0xff ));
-	
-    previousTime = 0; 
-    
     setLifes(PLAYER_LIFES);
-    
-    untouchable = false;
-    timeUntouchable = 0;
 }
 
 Player::~Player()
-{
-	SDL_FreeSurface(sUntouchable);
-}
+{}
 
 void Player::handle_input(SDL_Event event)
 {
@@ -55,16 +45,18 @@ void Player::show(SDL_Surface *screen)
 		shoot();
 		previousTime = SDL_GetTicks();
 	}
+	if(SDL_GetTicks() - getTimeUntouchable() > TIME_UNTOUCHABLE)
+		setUntouchable(false);
 	SDL_Rect r;
 	//cout << "x " << xVel << "y " << yVel << endl;
     x += xVel;
-    if( ( x < 0 ) || ( x + PLAYER_WIDTH > SCREEN_WIDTH ) )
+    if( ( x < 0 ) || ( x + spriteShip->w > SCREEN_WIDTH ) )
     {
         x -= xVel;
     }
    
     y += yVel;
-    if( ( y < 0 ) || ( y + PLAYER_HEIGHT > SCREEN_HEIGHT ) )
+    if( ( y < 0 ) || ( y + spriteShip->h  > SCREEN_HEIGHT ) )
     {
         y -= yVel;
     }
@@ -78,15 +70,14 @@ void Player::show(SDL_Surface *screen)
 
 void Player::shoot()
 {
-	Bullet * b = new Bullet();
+	Bullet * bullet = new Bullet(game->getSbulletPlayer());
 	//double angle = atan2( _y - player->getY(), _x - player->getX());
 	double angle = atan2( -1, 0);
-	if(!b->init(game->getSbulletPlayer(), 
-				getX() + PLAYER_WIDTH/2,
-				getY(), 
-				angle, LENGTH_SHOOT))
+	if(!bullet->init(getX() + spriteShip->w /2,
+					getY(), 
+					angle, LENGTH_SHOOT_PLAYER))
 		cout << "Problème lors de l initialisation d une bullet" << endl;
-	game->addPlayerBullet(b);
+	game->addPlayerBullet(bullet);
 }
 
 bool Player::collision(Bullet * _bullet)
@@ -100,16 +91,7 @@ bool Player::collision(Bullet * _bullet)
           return true; 
 }
 
-int Player::getH(){ return PLAYER_HEIGHT; }
-int Player::getW(){ return PLAYER_WIDTH; }
+int Player::getH(){ return spriteShip->h; }
+int Player::getW(){ return spriteShip->w; }
 int Player::getLifes(){ return lifes; }
 void Player::setLifes(int _lifes){ lifes = _lifes; }
-void Player::setUntouchable(bool _state)
-{ 
-	if(_state)
-		timeUntouchable = SDL_GetTicks();
-	untouchable = _state;		
-		
-}	
-bool Player::getUntouchable(){ return untouchable; }
-Uint32 Player::getTimeUntouchable(){ return timeUntouchable; }

@@ -10,10 +10,10 @@ class Game;
 class BossLvl1 : public Ship
 {
     private:
-        int previousTime;
         int futurPos;
+        SDL_Rect turret1, turret2;
     public:
-        BossLvl1(Game * _game, SDL_Surface * _spriteShip);
+        BossLvl1(Game * _game, SDL_Surface * _spriteShip, SDL_Surface * _spriteUntouch);
         virtual ~BossLvl1();
         void show(SDL_Surface * screen);
         void shoot();

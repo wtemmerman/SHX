@@ -2,7 +2,7 @@
  
  using namespace std;
  
- Bullet::Bullet()
+ Bullet::Bullet(SDL_Surface * _spriteBullet)
 {
     x = 0.0;
     y = 0.0;
@@ -16,15 +16,16 @@
 	
 	type = 0;
 	
-    spriteBullet = NULL;
+    spriteBullet = _spriteBullet;
 }
 
 Bullet::~Bullet()
 {
-	SDL_FreeSurface(spriteBullet);
+	if(spriteBullet != NULL)
+		SDL_FreeSurface(spriteBullet);
 }
 
-bool Bullet::init(SDL_Surface * _spriteBullet, int _x, int _y, double _angle, double _length)
+bool Bullet::init(int _x, int _y, double _angle, double _length)
 {
 	angle = _angle;
 	length = _length;
@@ -32,13 +33,6 @@ bool Bullet::init(SDL_Surface * _spriteBullet, int _x, int _y, double _angle, do
 	y = (double)_y;
 	xVel = cos(angle) * length;;
 	yVel = sin(angle) * length;
-	if(spriteBullet != NULL)
-	{
-		SDL_FreeSurface(spriteBullet);
-		spriteBullet = NULL;
-	}
-    spriteBullet = _spriteBullet;
-
     return true;
     
 }
@@ -67,5 +61,5 @@ bool Bullet::getRemove()
 
 int Bullet::getX(){ return x; }
 int Bullet::getY(){ return y; }
-int Bullet::getW(){ return BULLET_WIDTH; }
-int Bullet::getH(){ return BULLET_HEIGHT; }
+int Bullet::getW(){ return spriteBullet->w; }
+int Bullet::getH(){ return spriteBullet->h; }

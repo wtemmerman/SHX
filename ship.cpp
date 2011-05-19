@@ -4,12 +4,14 @@
   
 using namespace std;
  
-Ship::Ship(Game * _game, SDL_Surface * _spriteShip)
+Ship::Ship(Game * _game, SDL_Surface * _spriteShip, SDL_Surface * _sUntouchable)
 {
 	game = _game;
 	spriteShip = _spriteShip;
-	
+	sUntouchable =  _sUntouchable;
 	toRemove = false;
+	untouchable = false;
+	previousTime = 0;
 	
     x = 0;
     y = 0;
@@ -18,12 +20,19 @@ Ship::Ship(Game * _game, SDL_Surface * _spriteShip)
     yVel = 0;
     
     lifes = 0;
+    if(spriteShip != NULL)
+		SDL_SetColorKey(spriteShip,SDL_RLEACCEL | SDL_SRCCOLORKEY, SDL_MapRGB( spriteShip->format, 0xff, 0x00, 0xff ));
+	if(sUntouchable != NULL)
+		SDL_SetColorKey(sUntouchable,SDL_RLEACCEL | SDL_SRCCOLORKEY, SDL_MapRGB( sUntouchable->format, 0xff, 0x00, 0xff ));
 }
 
 Ship::~Ship()
 {
-	SDL_FreeSurface(spriteShip);
 	delete game;
+	if(spriteShip != NULL)
+		SDL_FreeSurface(spriteShip);
+	if(sUntouchable != NULL)
+		SDL_FreeSurface(sUntouchable);
 }
 
 bool Ship::init(int _x, int _y)
@@ -58,4 +67,13 @@ bool Ship::getRemove(){	return toRemove; }
 void Ship::setRemove(bool _toRemove){ toRemove = _toRemove; }
 int Ship::getX(){ return x; }
 int Ship::getY(){ return y; }
+void Ship::setUntouchable(bool _state)
+{ 
+	if(_state)
+		timeUntouchable = SDL_GetTicks();
+	untouchable = _state;		
+		
+}	
+bool Ship::getUntouchable(){ return untouchable; }
+Uint32 Ship::getTimeUntouchable(){ return timeUntouchable; }
 

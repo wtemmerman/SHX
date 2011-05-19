@@ -11,7 +11,7 @@ class Turret : public Ship
     private:
         int previousTime;
     public:
-        Turret(Game * _game, SDL_Surface * _spriteShip);
+        Turret(Game * _game, SDL_Surface * _spriteShip, SDL_Surface * _spriteUntouch);
         virtual ~Turret();
         void show(SDL_Surface * screen);
         void shoot();

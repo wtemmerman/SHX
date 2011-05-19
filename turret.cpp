@@ -3,9 +3,8 @@
  
 using namespace std;
  
-Turret::Turret(Game * _game, SDL_Surface * _spriteShip):Ship(_game, _spriteShip)
+Turret::Turret(Game * _game, SDL_Surface * _spriteShip, SDL_Surface * _spriteUntouch):Ship(_game,_spriteShip, _spriteUntouch)
 {
-    previousTime = 0; 
     yVel = _game->getBgSpeed();
     toRemove = false;
     setLifes(TURRET_LIFES);
@@ -23,10 +22,10 @@ void Turret::show(SDL_Surface * screen)
 		shoot();
 		previousTime = SDL_GetTicks();
 	}	
-	if( ( x < 0 - TURRET_WIDTH ) || 
-		( x > TURRET_WIDTH + SCREEN_WIDTH ) ||
+	if( ( x < 0 - spriteShip->w ) || 
+		( x > spriteShip->w + SCREEN_WIDTH ) ||
 		//( y < 0 - TURRET_HEIGHT) || 
-		( y > TURRET_HEIGHT + SCREEN_HEIGHT)
+		( y > spriteShip->h + SCREEN_HEIGHT)
 		|| getLifes() == 0 )
     {
         setRemove(true);
@@ -39,14 +38,13 @@ void Turret::show(SDL_Surface * screen)
 
 void Turret::shoot()
 {
-	Bullet * b = new Bullet();
+	Bullet * bullet = new Bullet(game->getSbulletEnemy());
 	double angle = atan2( game->getPlayer()->getY() - getY(),game->getPlayer()->getX() - getX());
-	if(!b->init(game->getSbulletEnemy(), 
-				getX() + TURRET_WIDTH/2 - BULLET_WIDTH/2,
-				getY() + TURRET_HEIGHT/2 - BULLET_HEIGHT/2, 
-				angle, LENGTH_SHOOT))
+	if(!bullet->init(getX() + spriteShip->w/2 - bullet->getW()/2,
+					getY() + spriteShip->h/2 - bullet->getH()/2, 
+					angle, LENGTH_SHOOT))
 		cout << "Problème lors de l initialisation d une bullet" << endl;
-	game->addEnemyBullet(b);
+	game->addEnemyBullet(bullet);
 }
 
 bool Turret::collision(Bullet * _bullet)
@@ -60,7 +58,7 @@ bool Turret::collision(Bullet * _bullet)
           return true; 
 }
 
-int Turret::getH(){ return TURRET_HEIGHT; }
-int Turret::getW(){ return TURRET_WIDTH; }
+int Turret::getH(){ return spriteShip->h; }
+int Turret::getW(){ return spriteShip->w; }
 int Turret::getLifes(){ return lifes; }
 void Turret::setLifes(int _lifes){ lifes += _lifes; }

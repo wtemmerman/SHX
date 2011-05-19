@@ -9,7 +9,8 @@
 #include <fstream>
 
 const double PI = 3.141592654;
-const double LENGTH_SHOOT = 3.0;
+const double LENGTH_SHOOT = 4.0;
+const double LENGTH_SHOOT_PLAYER = 6.0;
 const int PSDL_PIMGLVL = 50; // 50 /1 
 
 const int BG_SPEED = 1;
@@ -30,14 +31,14 @@ const int PLAYER_LIFES = 3;
 const int TURRET_WIDTH = 50;
 const int TURRET_HEIGHT = 50;
 const int TURRET_LIFES = 1;
-const int BOSS_LIFES = 20;
+const int BOSS_LIFES = 5;
 
 const int BULLET_WIDTH = 5;
 const int BULLET_HEIGHT = 5;
 
-const unsigned int BULLET_TIME_PLAYER = 200;
+const unsigned int BULLET_TIME_PLAYER = 400;
 const unsigned int BULLET_TIME_TURRET = 700;
-const unsigned int BULLET_TIME_BOSS = 400;
+const unsigned int BULLET_TIME_BOSS = 500;
 const unsigned int TIME_UNTOUCHABLE = 3000;
 
 const unsigned int WANTED_FPS = 40; // 1000/40 =  25 fps

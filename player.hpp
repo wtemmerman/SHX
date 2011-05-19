@@ -9,10 +9,7 @@ class Game;
 class Player : public Ship
 {
     private:
-		SDL_Surface * sUntouchable;
-        int previousTime;
-        bool untouchable;
-        Uint32 timeUntouchable;
+
     public:
         Player(Game * _game, SDL_Surface * _spriteShip, SDL_Surface * _spriteUntouch);
         virtual ~Player();
@@ -24,9 +21,7 @@ class Player : public Ship
         int getW();
         int getLifes();
         void setLifes(int _lifes);
-        void setUntouchable(bool _state);
-        bool getUntouchable();
-        Uint32 getTimeUntouchable();
+
  };
 
 #endif	
