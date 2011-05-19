@@ -21,7 +21,6 @@ class Bullet
         bool init(SDL_Surface * _spriteBullet, int _x, int _y, double _angle, double _length);
         void show(SDL_Surface * screen);
         bool getRemove();
-        bool collision(Ship * _ship);
         int getX();
         int getY();
         int getW();

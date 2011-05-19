@@ -3,7 +3,7 @@
 LDFLAGS = `sdl-config --cflags --libs` -lSDL_image -lSDL_ttf -lSDL
 CXXFLAGS = -g -Wall
 
-OBJECTS = main.o engine.o menu.o game.o ship.o player.o turret.o bullet.o hud.o
+OBJECTS = main.o engine.o menu.o game.o ship.o player.o turret.o bullet.o hud.o bossLvl1.o
 TARGET = shxv1
 
 # $@ contient le nom de la cible

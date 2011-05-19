@@ -84,10 +84,22 @@ void Player::shoot()
 	if(!b->init(game->getSbulletPlayer(), 
 				getX() + PLAYER_WIDTH/2,
 				getY(), 
-				angle, 3.0))
+				angle, LENGTH_SHOOT))
 		cout << "Problème lors de l initialisation d une bullet" << endl;
 	game->addPlayerBullet(b);
 }
+
+bool Player::collision(Bullet * _bullet)
+{
+	if((_bullet->getX() >= this->getX()+ this->getW())      // trop à droite
+	|| (_bullet->getX() +  _bullet->getW()	<= this->getX()) // trop à gauche
+	|| (_bullet->getY() >= this->getY()+ this->getH()) // trop en bas
+	|| (_bullet->getY() +  _bullet->getH() 	<= this->getY()))  // trop en haut
+          return false; 
+   else
+          return true; 
+}
+
 int Player::getH(){ return PLAYER_HEIGHT; }
 int Player::getW(){ return PLAYER_WIDTH; }
 int Player::getLifes(){ return lifes; }

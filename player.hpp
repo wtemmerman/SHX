@@ -19,6 +19,7 @@ class Player : public Ship
         void handle_input(SDL_Event event);
         void show(SDL_Surface * screen);
         void shoot();
+        bool collision(Bullet * _bullet);
         int getH();
         int getW();
         int getLifes();

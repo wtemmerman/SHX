@@ -1,9 +1,10 @@
- #include "ship.hpp"
- #include "game.hpp"
+#include "ship.hpp"
+#include "game.hpp"
+#include "bullet.hpp"
+  
+using namespace std;
  
- using namespace std;
- 
- Ship::Ship(Game * _game, SDL_Surface * _spriteShip)
+Ship::Ship(Game * _game, SDL_Surface * _spriteShip)
 {
 	game = _game;
 	spriteShip = _spriteShip;
@@ -41,6 +42,8 @@ bool Ship::init(int _x, int _y)
 void Ship::shoot()
 {}
 void Ship::show(SDL_Surface *screen)
+{}
+bool Ship::collision(Bullet * _bullet)
 {}
 int Ship::getH()
 {}

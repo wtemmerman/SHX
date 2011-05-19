@@ -9,12 +9,13 @@
 
 class Player;
 class Turret;
+class BossLvl1;
 class Hud;
 
 class Game
 {
     private: 
-    	SDL_Surface * bg, * sPlayer, * sUntouchPlayer, * sPlayerLife, * sbulletPlayer, * sTurret, * sbulletTurret;  
+    	SDL_Surface * bg, * sPlayer, * sUntouchPlayer, * sPlayerLife, * sbulletPlayer, * sTurret, * sbulletTurret, * sBossLvl1;  
     	SDL_Surface * levelTest;
     	std::vector<Bullet *> bulletsEnnemys;
     	std::vector<Bullet *> bulletsPlayer;

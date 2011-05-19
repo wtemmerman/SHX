@@ -6,3 +6,4 @@ data/turret.bmp
 data/bulletPlayer.bmp
 data/bulletTurret.bmp
 data/levelTest.bmp
+data/bossLvl1.bmp

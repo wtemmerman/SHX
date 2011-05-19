@@ -1,6 +1,7 @@
 #include "game.hpp"
 #include "player.hpp"
 #include "turret.hpp"
+#include "bossLvl1.hpp"
 #include "hud.hpp"
 
 using namespace std;
@@ -10,7 +11,7 @@ Game::Game()
 	end = false;
     bg = NULL;
     bgX = bgY = 0;
-    bgSpeed = 1;
+    bgSpeed = BG_SPEED;
     lineBg = 600;
     nextInfo = 0;
     bulletsPlayer = vector<Bullet *>();
@@ -29,7 +30,7 @@ Game::~Game()
     SDL_FreeSurface(sbulletPlayer);
     SDL_FreeSurface(sbulletTurret);
     SDL_FreeSurface(levelTest);
-
+	SDL_FreeSurface(sBossLvl1);
     	
     for (vector<Ship *>::iterator it = enemys.begin(); 
 			it != enemys.end(); 
@@ -87,7 +88,10 @@ bool Game::init(string file)
     inputfile >> s;
     levelTest = SDL_LoadBMP(s.data());
 
-    if( bg==NULL || sPlayer==NULL || sUntouchPlayer == NULL || sPlayerLife == NULL || sTurret==NULL || sbulletPlayer==NULL || sbulletTurret==NULL || levelTest==NULL)
+	inputfile >> s;
+	sBossLvl1 = SDL_LoadBMP(s.data());
+    if( bg==NULL || sPlayer==NULL || sUntouchPlayer == NULL || sPlayerLife == NULL || 
+    sTurret==NULL || sbulletPlayer==NULL || sbulletTurret==NULL || levelTest==NULL || sBossLvl1 == NULL)
 	{
     	cout << "Problem loading pictures from the Game" << endl;
     	return false;
@@ -147,7 +151,12 @@ void Game::loadLevel(SDL_Surface * _imgLvl)
 			{
 				line.push_back(x);
 				enemysOnLigne++;
-			}			
+			}	
+			if((int)r== 0 && (int)g == 255 && (int)b == 0)
+			{
+				line.push_back(-1);
+				enemysOnLigne++;
+			}		
 		}		
 		if(enemysOnLigne == 0)
 			line.pop_back();
@@ -166,11 +175,19 @@ void Game::createEnemies()
 		t = new Turret(this, sTurret);
 		if(nextInfo < SCREEN_HEIGHT)
 		{
-			t->init(lvlInfos.back()[i]*PSDL_PIMGLVL, SCREEN_HEIGHT - lvlInfos.back().front() * PSDL_PIMGLVL);
+			t->init(lvlInfos.back()[i]*sTurret->h, SCREEN_HEIGHT - lvlInfos.back().front() * sTurret->h);
 		}
 		else
 		{
-			t->init(lvlInfos.back()[i]*PSDL_PIMGLVL, -PSDL_PIMGLVL);
+			if(lvlInfos.back()[i] == -1)
+			{			
+				BossLvl1 * boss1;
+				boss1 = new BossLvl1(this, sBossLvl1);
+				boss1->init(200, -sBossLvl1->h);
+				enemys.push_back(boss1);
+			}
+			else
+				t->init(lvlInfos.back()[i]*PSDL_PIMGLVL, -sTurret->h);
 		}
 		enemys.push_back(t);
 	}
@@ -255,7 +272,7 @@ void Game::show(SDL_Surface * _screen)
 	//Collision test 
 	for (vector<Bullet *>::iterator itb = bulletsEnnemys.begin();itb != bulletsEnnemys.end();)
 	{
-		if((*itb)->collision(player))
+		if((player)->collision(*itb))
 		{		
 
 			if(!player->getUntouchable())
@@ -265,33 +282,30 @@ void Game::show(SDL_Surface * _screen)
 				cout << "Player lifes "<< player->getLifes()<< endl;
 			}
 			bulletsEnnemys.erase(itb);				
-			//break;
 		}
 		else 
 			itb++;
 	}
 	if(SDL_GetTicks() - player->getTimeUntouchable() > TIME_UNTOUCHABLE)
 		player->setUntouchable(false);
-	
-	bool deleteEnemy = false;		
+			
 	for (vector<Ship *>::iterator ite = enemys.begin();ite != enemys.end();)
 	{
 		for (vector<Bullet *>::iterator itb = bulletsPlayer.begin();itb != bulletsPlayer.end();)
 		{
-			if((*itb)->collision(*ite) )
+			if((*ite)->collision(*itb) )
 			{					
 				hud->changeScore(TURRET_POINT);
 				bulletsPlayer.erase(itb);
-				deleteEnemy = true;
+				(*ite)->setLifes(-1);
 			}
 			else
 				itb++;
 		}
-		if(deleteEnemy)		
+		if((*ite)->getRemove())		
 			enemys.erase(ite);
 		else		
 			ite++;
-		deleteEnemy = false;
 	}	
 	checkEnd();
 }

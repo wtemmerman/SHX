@@ -60,17 +60,6 @@ void Bullet::show(SDL_Surface *screen)
     SDL_BlitSurface(spriteBullet, NULL, screen, &r);
 }
 
-bool Bullet::collision(Ship * _ship)
-{
-	if((_ship->getX() >= this->getX()+ this->getW())      // trop à droite
-	|| (_ship->getX() +  _ship->getW()	<= this->getX()) // trop à gauche
-	|| (_ship->getY() >= this->getY()+ this->getH()) // trop en bas
-	|| (_ship->getY() +  _ship->getH() 	<= this->getY()))  // trop en haut
-          return false; 
-   else
-          return true; 
-}
-
 bool Bullet::getRemove()
 {
 	return toRemove;

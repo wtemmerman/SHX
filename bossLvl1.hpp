@@ -1,18 +1,20 @@
-#ifndef H_TURRET
-#define	H_TURRET
+#ifndef H_BOSS1
+#define	H_BOSS1
 
 #include "constants.hpp"
 #include "ship.hpp"
+#include <time.h>
 
 class Game;
 
-class Turret : public Ship
+class BossLvl1 : public Ship
 {
     private:
         int previousTime;
+        int futurPos;
     public:
-        Turret(Game * _game, SDL_Surface * _spriteShip);
-        virtual ~Turret();
+        BossLvl1(Game * _game, SDL_Surface * _spriteShip);
+        virtual ~BossLvl1();
         void show(SDL_Surface * screen);
         void shoot();
         bool collision(Bullet * _bullet);
@@ -23,4 +25,3 @@ class Turret : public Ship
  };
 
 #endif	
-
