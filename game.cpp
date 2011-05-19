@@ -21,18 +21,18 @@ Game::Game()
 }
 
 Game::~Game()
-{
-    SDL_FreeSurface(bg);
-    SDL_FreeSurface(sPlayer);
-    SDL_FreeSurface(sUntouchPlayer);
-    SDL_FreeSurface(sPlayerLife);
-    SDL_FreeSurface(sTurret);
-    SDL_FreeSurface(sbulletPlayer);
-    SDL_FreeSurface(sbulletTurret);
-    SDL_FreeSurface(levelTest);
-	SDL_FreeSurface(sBossLvl1);
-	SDL_FreeSurface(sUntouchBoss);
-    	
+{    
+	if( bg != NULL)				SDL_FreeSurface(bg);
+    if( sPlayer != NULL)		SDL_FreeSurface(sPlayer);
+    if( sUntouchPlayer != NULL)	SDL_FreeSurface(sUntouchPlayer);
+    if( sPlayerLife != NULL)	SDL_FreeSurface(sPlayerLife);
+    if( sTurret != NULL)		SDL_FreeSurface(sTurret);
+    if( sbulletPlayer != NULL)	SDL_FreeSurface(sbulletPlayer);
+    if( sbulletTurret != NULL)	SDL_FreeSurface(sbulletTurret);
+    if( levelTest != NULL)		SDL_FreeSurface(levelTest);
+	if( sBossLvl1 != NULL)		SDL_FreeSurface(sBossLvl1);
+	if( sUntouchBoss != NULL)	SDL_FreeSurface(sUntouchBoss);
+	
     for (vector<Ship *>::iterator it = enemys.begin(); 
 			it != enemys.end(); 
 			it++)
@@ -45,6 +45,9 @@ Game::~Game()
 			it != bulletsEnnemys.end(); 
 			it++)
 		delete (*it);
+				
+	if(player != NULL)delete player;
+	if(hud != NULL)delete hud;
 }
 
 bool Game::init(string file)

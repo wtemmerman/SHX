@@ -28,7 +28,6 @@ Ship::Ship(Game * _game, SDL_Surface * _spriteShip, SDL_Surface * _sUntouchable)
 
 Ship::~Ship()
 {
-	delete game;
 	if(spriteShip != NULL)
 		SDL_FreeSurface(spriteShip);
 	if(sUntouchable != NULL)

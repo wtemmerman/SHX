@@ -12,7 +12,7 @@ class Player : public Ship
 
     public:
         Player(Game * _game, SDL_Surface * _spriteShip, SDL_Surface * _spriteUntouch);
-        virtual ~Player();
+        ~Player();
         void handle_input(SDL_Event event);
         void show(SDL_Surface * screen);
         void shoot();

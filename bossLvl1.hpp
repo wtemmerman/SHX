@@ -14,7 +14,7 @@ class BossLvl1 : public Ship
         SDL_Rect turret1, turret2;
     public:
         BossLvl1(Game * _game, SDL_Surface * _spriteShip, SDL_Surface * _spriteUntouch);
-        virtual ~BossLvl1();
+        ~BossLvl1();
         void show(SDL_Surface * screen);
         void shoot();
         bool collision(Bullet * _bullet);

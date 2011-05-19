@@ -12,7 +12,7 @@ class Turret : public Ship
         int previousTime;
     public:
         Turret(Game * _game, SDL_Surface * _spriteShip, SDL_Surface * _spriteUntouch);
-        virtual ~Turret();
+        ~Turret();
         void show(SDL_Surface * screen);
         void shoot();
         bool collision(Bullet * _bullet);

@@ -11,7 +11,7 @@ Hud::Hud(Game * _game, SDL_Surface * _sLife)
 	lifes = 0;
 	score = 0;
 	
-	police = TTF_OpenFont("angelina.TTF", 22);	
+	police = TTF_OpenFont("data/angelina.TTF", 22);	
 	posLife.x = SCREEN_WIDTH + 5;
 	posLife.y = 5;
 	white.r = 255;
@@ -32,9 +32,9 @@ Hud::Hud(Game * _game, SDL_Surface * _sLife)
 
 Hud::~Hud()
 {
-	SDL_FreeSurface(sLife);
-	SDL_FreeSurface(sScore);
-	SDL_FreeSurface(sScoreInt);
+	if( sLife != NULL)		SDL_FreeSurface(sLife);
+	if( sScore != NULL)		SDL_FreeSurface(sScore);
+	if( sScoreInt != NULL)	SDL_FreeSurface(sScoreInt);
 	TTF_CloseFont(police);
 }
 
