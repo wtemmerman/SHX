@@ -1,9 +1,9 @@
 # SHX makefile - wtx 2011
 
-LDFLAGS = `sdl-config --cflags --libs` -lSDL_image -lSDL
+LDFLAGS = `sdl-config --cflags --libs` -lSDL_image -lSDL_ttf -lSDL
 CXXFLAGS = -g -Wall
 
-OBJECTS = main.o engine.o menu.o game.o ship.o player.o turret.o bullet.o 
+OBJECTS = main.o engine.o menu.o game.o ship.o player.o turret.o bullet.o hud.o
 TARGET = shxv1
 
 # $@ contient le nom de la cible

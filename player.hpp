@@ -1,5 +1,5 @@
-#ifndef PLAYER_HPP
-#define	PLAYER_HPP
+#ifndef H_PLAYER
+#define	H_PLAYER
 
 #include "constants.hpp"
 #include "ship.hpp"
@@ -11,7 +11,6 @@ class Player : public Ship
     private:
 		SDL_Surface * sUntouchable;
         int previousTime;
-        int lifes;
         bool untouchable;
         Uint32 timeUntouchable;
     public:
@@ -29,4 +28,4 @@ class Player : public Ship
         Uint32 getTimeUntouchable();
  };
 
-#endif	/* PLAYER_HPP */
+#endif	

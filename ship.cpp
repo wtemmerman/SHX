@@ -15,6 +15,8 @@
 
     xVel = 0;
     yVel = 0;
+    
+    lifes = 0;
 }
 
 Ship::~Ship()
@@ -43,6 +45,10 @@ void Ship::show(SDL_Surface *screen)
 int Ship::getH()
 {}
 int Ship::getW()
+{}
+int Ship::getLifes()
+{}
+void Ship::setLifes(int _lifes)
 {}
 
 bool Ship::getRemove(){	return toRemove; }

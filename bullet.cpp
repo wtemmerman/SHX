@@ -4,10 +4,10 @@
  
  Bullet::Bullet()
 {
-    x = 0;
-    y = 0;
-	xVel = 0;
-	yVel = 0;
+    x = 0.0;
+    y = 0.0;
+	xVel = 0.0;
+	yVel = 0.0;
 	
     angle = 0.0;
     length = 0.0;
@@ -28,8 +28,8 @@ bool Bullet::init(SDL_Surface * _spriteBullet, int _x, int _y, double _angle, do
 {
 	angle = _angle;
 	length = _length;
-	x = _x;
-	y = _y;
+	x = (double)_x;
+	y = (double)_y;
 	xVel = cos(angle) * length;;
 	yVel = sin(angle) * length;
 	if(spriteBullet != NULL)

@@ -1,5 +1,5 @@
-#ifndef SHIP_HPP
-#define	SHIP_HPP
+#ifndef H_SHIP
+#define	H_SHIP
 
 #include "constants.hpp"
 
@@ -11,6 +11,7 @@ class Ship
 		Game * game;
         int x, y;
         int xVel, yVel;
+        int lifes;
 		SDL_Surface * spriteShip;
 		bool toRemove;
     public:
@@ -21,10 +22,12 @@ class Ship
         virtual void shoot()= 0;
         virtual int getH() = 0;
         virtual int getW() = 0;
+		virtual int getLifes() = 0;
+		virtual void setLifes(int _lifes) = 0;
         bool getRemove();
         void setRemove(bool _toRemove);
         int getX();
         int getY();
  };
 
-#endif	/* SHIP_HPP */
+#endif

@@ -11,8 +11,14 @@ int main(int argc, char **argv)
 	SDL_Surface *screen;
 	int done = 0, start;
 
-	if(SDL_Init(SDL_INIT_VIDEO)!=0) {
+	if(SDL_Init(SDL_INIT_VIDEO)!=0) 
+	{
 		cout << "Problem for init SDL : " << SDL_GetError() << endl;
+		return 1;
+	}
+	if(TTF_Init() !=0)
+	{
+		cout << "Erreur d'initialisation de TTF_Init : " << SDL_GetError() << endl;
 		return 1;
 	}
     SDL_WM_SetCaption("Shoot'em up xTrem", NULL);
@@ -41,8 +47,9 @@ int main(int argc, char **argv)
 			 SDL_Delay(( 1000 / WANTED_FPS ) - (SDL_GetTicks() - start));
 		} 
     }
+    TTF_Quit();
 	SDL_Quit();
-
+	
     (void) argc;
     (void) argv;
 	return 0;

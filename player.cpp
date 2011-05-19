@@ -6,11 +6,11 @@ using namespace std;
 Player::Player(Game * _game, SDL_Surface * _spriteShip, SDL_Surface * _spriteUntouch):Ship(_game,_spriteShip)
 {
 	sUntouchable = _spriteUntouch;
-	SDL_SetColorKey(sUntouchable,SDL_RLEACCEL | SDL_SRCCOLORKEY, SDL_MapRGB( spriteShip->format, 0xff, 0x00, 0xff ));
+	SDL_SetColorKey(sUntouchable,SDL_RLEACCEL | SDL_SRCCOLORKEY, SDL_MapRGB( sUntouchable->format, 0xff, 0x00, 0xff ));
 	
     previousTime = 0; 
     
-    lifes = PLAYER_LIFES;
+    setLifes(PLAYER_LIFES);
     
     untouchable = false;
     timeUntouchable = 0;
@@ -84,7 +84,7 @@ void Player::shoot()
 	if(!b->init(game->getSbulletPlayer(), 
 				getX() + PLAYER_WIDTH/2,
 				getY(), 
-				angle, 3))
+				angle, 3.0))
 		cout << "Problème lors de l initialisation d une bullet" << endl;
 	game->addPlayerBullet(b);
 }

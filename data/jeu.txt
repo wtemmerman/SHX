@@ -1,6 +1,7 @@
 data/bg.bmp
 data/player.bmp
 data/playerUntouch.bmp
+data/playerLife.bmp
 data/turret.bmp
 data/bulletPlayer.bmp
 data/bulletTurret.bmp

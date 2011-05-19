@@ -64,6 +64,7 @@ void Engine::clic(int x, int y)
 
 void Engine::show(SDL_Surface * screen)
 {
+	SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0x00, 0x00, 0x00));
 	if(inMenu)
 	{
 		menu->show(screen);

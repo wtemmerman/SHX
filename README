@@ -3,11 +3,9 @@ Done : scrolling background
 TODO: echap gestion (RAZ)
       add bullet
 	  aline menu
-
-pour SHX : ouais donc pour ta boucle d'update des bullets le soucis qui va se poser c'est pour la 
-et je pensais hériter de BadShip avec HorizontalbadShip ou autre par exemple 16/05/2011 02:56:34
-où là tu gères le déplacement du vaisseau de type horizontal pour commencer 16/05/2011 02:56:46
-à la space invaders 16/05/2011 02:56:49
-quand tu as un vaisseau en face qui bouge tu gères les collisions 16/05/2011 02:57:04
-puis ta vie 16/05/2011 02:57:08
-puis le HUD
+	  
+Clean proprement
+Boss(pixel vert)
+	rectangulaire,
+	deux tourelles de shoot(cercle) pour collision
+	straf aléatoire gauche droite

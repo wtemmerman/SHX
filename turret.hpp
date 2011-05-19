@@ -1,5 +1,5 @@
-#ifndef TURRET_HPP
-#define	TURRET_HPP
+#ifndef H_TURRET
+#define	H_TURRET
 
 #include "constants.hpp"
 #include "ship.hpp"
@@ -17,7 +17,9 @@ class Turret : public Ship
         void shoot();
         int getH();
         int getW();
+        int getLifes();
+		void setLifes(int _lifes);
  };
 
-#endif	/* TURRET_HPP */
+#endif	
 

@@ -1,5 +1,5 @@
-#ifndef BULLET_HPP
-#define	BULLET_HPP
+#ifndef H_BULLET
+#define	H_BULLET
 
 #include "constants.hpp"
 #include "ship.hpp"
@@ -9,7 +9,8 @@
 class Bullet
 {
     private:
-        int x, y, xVel, yVel;
+        double x, y; 
+        double xVel, yVel;
         double angle, length;
 		SDL_Surface * spriteBullet;
 		bool toRemove;
@@ -27,4 +28,4 @@ class Bullet
         int getH();
  };
 
-#endif	/* BULLET_HPP */
+#endif	
